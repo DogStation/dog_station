@@ -1,4 +1,5 @@
 ﻿using DogStation.Services;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +15,12 @@ namespace DogStation.Controllers
     public class AccountController : ApiController
     {
         static readonly AccountService accountService = new AccountService();
+        static readonly ILog logger = LogManager.GetLogger("myLog");
         [HttpGet, Route("login")]
         public object Login(string username, string password)
         {
             Dictionary<String, Object> result = new Dictionary<string, object>();
-
+            logger.Debug(string.Format("name:{0} pw:{1}", username, password));
             //数据库验证
             bool status = accountService.ValidateAccount(username, password);
             result.Add("status", status);

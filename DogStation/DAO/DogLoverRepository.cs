@@ -51,7 +51,8 @@ namespace DogStation.DAO
             var query = from lover in db.DogLover
                         where lover.name == username
                         select lover;
-            return query.ToList().FirstOrDefault().password;
+            List<DogLover> list = query.ToList();
+            return list.Count() == 0 ? null : list[0].password;
         }
     }
 }
