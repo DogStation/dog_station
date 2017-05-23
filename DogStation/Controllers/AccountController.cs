@@ -1,4 +1,5 @@
 ﻿using DogStation.Services;
+using DogStation.Utils;
 using log4net;
 using System;
 using System.Collections.Generic;
@@ -16,21 +17,52 @@ namespace DogStation.Controllers
     {
         static readonly AccountService accountService = new AccountService();
         static readonly ILog logger = LogManager.GetLogger("myLog");
+
         [HttpGet, Route("login")]
-        public object Login(string username, string password)
+        public HttpResponseMessage Login(string username, string password)
         {
+            HttpResponseMessage message = Request.CreateResponse();
             Dictionary<String, Object> result = new Dictionary<string, object>();
             logger.Debug(string.Format("name:{0} pw:{1}", username, password));
             //数据库验证
-            bool status = accountService.ValidateAccount(username, password);
-            result.Add("status", status);
-            if (status)
+            long userId = 0;
+            MyStatusCode state = accountService.ValidateAccount(username, password, ref userId);
+            message.StatusCode = (HttpStatusCode)state;
+            if (state == MyStatusCode.Validated)
             {
                 //生成token
-                string token = accountService.GenerateToken(username, password);
-                result.Add("token", token);
+                string token = accountService.GenerateToken(username, password, userId);
+                accountService.GenerateCookie(token);
+                result.Add("Token", token);
             }
-            return result;
+            string content = LitJson.JsonMapper.ToJson(result);
+            message.Content = new StringContent(content, System.Text.Encoding.UTF8, "application/json");
+            return message;
+        }
+
+        [HttpPost, Route("register")]
+        public HttpResponseMessage Register(dynamic data)
+        {
+            HttpResponseMessage message = Request.CreateResponse();
+            Dictionary<String, Object> result = new Dictionary<string, object>();
+            string username = data.username;
+            string password = data.password;
+            string gender = data.gender;
+            MyStatusCode state = accountService.RegisterAccount(username, password, gender);
+            message.StatusCode = (HttpStatusCode)state;
+            return message;
+        }
+
+        [SupportFilter]
+        [HttpGet, Route("logout")]
+        public HttpResponseMessage Logout()
+        {
+            HttpResponseMessage message = Request.CreateResponse();
+            string username = SupportFilter.GetUsernameFromCookie();
+            MyStatusCode state = accountService.CleanSessionAndCookie(username);
+            message.StatusCode = (HttpStatusCode)state;
+            return message;
         }
     }
+
 }

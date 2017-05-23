@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DogStation
+namespace DogStation.Models
 {
     using System;
     using System.Collections.Generic;
@@ -18,6 +18,7 @@ namespace DogStation
         public Dog()
         {
             this.Comment = new HashSet<Comment>();
+            this.Follow = new HashSet<Follow>();
         }
     
         public long idDog { get; set; }
@@ -25,11 +26,17 @@ namespace DogStation
         public string gender { get; set; }
         public string kind { get; set; }
         public string figure { get; set; }
-        public Nullable<long> sender { get; set; }
-        public Nullable<System.DateTime> sendTime { get; set; }
+        public long sender { get; set; }
+        public System.DateTime sendTime { get; set; }
+        public Nullable<long> adopter { get; set; }
+        public Nullable<System.DateTime> adoptTime { get; set; }
+        public int loves { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comment { get; set; }
         public virtual DogLover DogLover { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Follow> Follow { get; set; }
+        public virtual DogLover DogLover1 { get; set; }
     }
 }

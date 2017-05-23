@@ -1,4 +1,6 @@
-﻿using DogStation.Services;
+﻿using DogStation.Models;
+using DogStation.Services;
+using DogStation.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,25 +14,141 @@ namespace DogStation.Controllers
     public class DogController : ApiController
     {
         static readonly DogService dogService = new DogService();
+
+        [SupportFilter]
         [HttpGet, Route("all")]
-        public object GetAllAvailableDogs()
+        public HttpResponseMessage GetAllAvailableDogs()
         {
-            return dogService.GetAvailableDogs();
+            HttpResponseMessage message = new HttpResponseMessage();
+            List<Dictionary<String, Object>> dogs = dogService.GetAvailableDogs();
+            message.StatusCode = HttpStatusCode.OK;
+            string content = LitJson.JsonMapper.ToJson(dogs);
+            message.Content = new StringContent(content, System.Text.Encoding.UTF8, "application/json");
+            return message;
         }
 
-        [HttpPost, Route("add")]
-        public object AddDog(dynamic data)
+        [SupportFilter]
+        [HttpGet, Route("send")]
+        public HttpResponseMessage SeeSentDogs()
         {
+            long userId = SupportFilter.GetUserIdFromCookie();
+            HttpResponseMessage message = new HttpResponseMessage();
+            List<Dictionary<String, Object>> dogs = dogService.GetSentDogs(userId);
+            string content = LitJson.JsonMapper.ToJson(dogs);
+            message.Content = new StringContent(content, System.Text.Encoding.UTF8, "application/json");
+            message.StatusCode = HttpStatusCode.OK;
+            return message;
+        }
+
+
+        [SupportFilter]
+        [HttpPost, Route("dog/send")]
+        public HttpResponseMessage SendDog(dynamic data)
+        {
+            HttpResponseMessage message = new HttpResponseMessage();
             Dictionary<String, Object> result = new Dictionary<string, object>();
-            Dog dog = new Dog();
-            dog.name = data.name;
-            dog.kind = data.kind;
-            dog.gender = data.gender;
-            dog.figure = data.figure;
-            dog.sender = data.sender;
-            dog.sendTime = DateTime.Now;
-            result.Add("id", dogService.AddDog(dog));
-            return result;
+            Dog dog = new Dog()
+            {
+                name = data.name,
+                kind = data.kind,
+                gender = data.gender,
+                figure = data.figure,
+                sender = data.sender,
+                sendTime = DateTime.Now,
+                adopter = 0
+            };
+
+            long idDog = dogService.SendDog(dog);
+            result.Add("id", idDog);
+            message.StatusCode = idDog == 0 ? HttpStatusCode.InternalServerError : HttpStatusCode.OK;
+            string content = LitJson.JsonMapper.ToJson(result);
+            message.Content = new StringContent(content, System.Text.Encoding.UTF8, "application/json");
+            return message;
+        }
+
+        [SupportFilter]
+        [HttpPost, Route("dog/adopt")]
+        public HttpResponseMessage AdoptDog(dynamic data)
+        {
+            HttpResponseMessage message = new HttpResponseMessage();
+            Dictionary<String, Object> result = new Dictionary<string, object>();
+            long idDog = data.idDog;
+            long idLover = SupportFilter.GetUserIdFromCookie();
+            MyStatusCode state = dogService.AdoptDog(idLover, idDog);
+            message.StatusCode = (HttpStatusCode)state;
+            return message;
+        }
+
+        [SupportFilter]
+        [HttpGet, Route("adopt")]
+        public HttpResponseMessage SeeAdoptedDogs()
+        {
+            long userId = SupportFilter.GetUserIdFromCookie();
+            HttpResponseMessage message = new HttpResponseMessage();
+            List<Dictionary<String, Object>> dogs = dogService.GetAdoptedDogs(userId);
+            string content = LitJson.JsonMapper.ToJson(dogs);
+            message.Content = new StringContent(content, System.Text.Encoding.UTF8, "application/json");
+            message.StatusCode = HttpStatusCode.OK;
+            return message;
+        }
+
+        [SupportFilter]
+        [HttpGet, Route("dog/follow")]
+        public HttpResponseMessage FollowDog(long idDog)
+        {
+            long userId = SupportFilter.GetUserIdFromCookie();
+            HttpResponseMessage message = new HttpResponseMessage();
+            MyStatusCode state = dogService.FollowDog(userId, idDog);
+            message.StatusCode = (HttpStatusCode)state;
+            return message;
+        }
+
+        [SupportFilter]
+        [HttpGet, Route("dog/unfollow")]
+        public HttpResponseMessage UnfollowDog(long idDog)
+        {
+            long userId = SupportFilter.GetUserIdFromCookie();
+            HttpResponseMessage message = new HttpResponseMessage();
+            MyStatusCode state = dogService.UnfollowDog(userId, idDog);
+            message.StatusCode = (HttpStatusCode)state;
+            return message;
+        }
+
+        [SupportFilter]
+        [HttpGet, Route("follow")]
+        public HttpResponseMessage SeeFollowDogs()
+        {
+            long userId = SupportFilter.GetUserIdFromCookie();
+            HttpResponseMessage message = new HttpResponseMessage();
+            List<Dictionary<String, Object>> dogs = dogService.GetFollowDogs(userId);
+            string content = LitJson.JsonMapper.ToJson(dogs);
+            message.Content = new StringContent(content, System.Text.Encoding.UTF8, "application/json");
+            message.StatusCode = HttpStatusCode.OK;
+            return message;
+        }
+
+        [SupportFilter]
+        [HttpGet, Route("dog/get")]
+        public HttpResponseMessage SeeDogBasicInfo(long idDog)
+        {
+            HttpResponseMessage message = new HttpResponseMessage();
+            Dictionary<string, object> dog = dogService.SeeDogBasic(idDog);
+            string content = LitJson.JsonMapper.ToJson(dog);
+            message.Content = new StringContent(content, System.Text.Encoding.UTF8, "application/json");
+            message.StatusCode = HttpStatusCode.OK;
+            return message;
+        }
+
+        [SupportFilter]
+        [HttpGet, Route("dog/activity")]
+        public HttpResponseMessage SeeDogActivities(long idDog)
+        {
+            HttpResponseMessage message = new HttpResponseMessage();
+            List<Dictionary<string, object>> activities = dogService.SeeDogActivities(idDog);
+            string content = LitJson.JsonMapper.ToJson(activities);
+            message.Content = new StringContent(content, System.Text.Encoding.UTF8, "application/json");
+            message.StatusCode = HttpStatusCode.OK;
+            return message;
         }
     }
 }

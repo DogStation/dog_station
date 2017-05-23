@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DogStation
+namespace DogStation.Models
 {
     using System;
     using System.Collections.Generic;
@@ -17,11 +17,11 @@ namespace DogStation
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public DogLover()
         {
-            this.AdoptedDog = new HashSet<AdoptedDog>();
-            this.AdoptedDog1 = new HashSet<AdoptedDog>();
             this.Comment = new HashSet<Comment>();
             this.Dog = new HashSet<Dog>();
+            this.Dog1 = new HashSet<Dog>();
             this.DonateRecord = new HashSet<DonateRecord>();
+            this.Follow = new HashSet<Follow>();
         }
     
         public long idUser { get; set; }
@@ -31,19 +31,19 @@ namespace DogStation
         public string tel { get; set; }
         public string email { get; set; }
         public string figure { get; set; }
-        public Nullable<int> loves { get; set; }
-        public Nullable<int> adoptDogs { get; set; }
-        public string loveDogs { get; set; }
+        public int loves { get; set; }
+        public int adoptDogs { get; set; }
+        public int loveDogs { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AdoptedDog> AdoptedDog { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AdoptedDog> AdoptedDog1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comment { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Dog> Dog { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Dog> Dog1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DonateRecord> DonateRecord { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Follow> Follow { get; set; }
     }
 }

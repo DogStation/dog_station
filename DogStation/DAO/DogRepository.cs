@@ -1,4 +1,5 @@
 ﻿using DogStation.DAO.Interfaces;
+using DogStation.Models;
 using DogStation.Utils;
 using System;
 using System.Collections.Generic;
@@ -23,41 +24,47 @@ namespace DogStation.DAO
             return t;
         }
 
-        public Dog Delete(int id)
+        public Dog Delete(long id)
         {
-            Dog dog = db.Dog.Find(id);
-            db.Entry(dog).State = EntityState.Deleted;
-            db.SaveChangesAsync();
-            return Add(dog);
+            throw new NotImplementedException();
         }
 
-        public Dog Get(int id)
+        public Dog Get(long id)
         {
-            Dog dog = db.Dog.Find(id);
-            return dog;
+            return db.Dog.Find(id);
         }
-
-        //public Dictionary<String, Object> GetAsDict(int id)
-        //{
-        //    Dog dog = db.Dog.Find(id);
-        //    db.Entry(dog).Reference(d => d.DogLover).Load();
-
-        //    return ConverterUtil.convertDog(dog);
-        //}
 
         public List<Dog> GetAll()
         {
             List<Dog> dogs = db.Dog.ToList();
-
             return dogs;
         }
 
-        //public List<Dictionary<String, Object>> GetAllAsDict()
-        //{
-        //    db.Dog.Include(d => d.DogLover);
-        //    List<Dog> dogs = db.Dog.ToList();
-        //    return ConverterUtil.convertDogs(dogs);
-        //}
+        public List<Dog> GetFreeDogs()
+        {
+            return db.Dog
+                .Where(d => d.adopter == 0)
+                .OrderByDescending(d => d.sendTime)
+                .ToList();
+        }
+
+        public List<Dog> GetSentDogs(long userId)
+        {
+            return db.Dog
+                .Where(d => d.sender == userId)
+                .OrderByDescending(d => d.sendTime)
+                .ToList();
+        }
+
+        public List<Dog> GetAdoptedDogs(long userId)
+        {
+            return db.Dog
+                .Where(d => d.adopter == userId)
+                .OrderByDescending(d => d.adoptTime)
+                .ToList();
+        }
+
+        
 
         public bool Update(Dog t)
         {
@@ -66,6 +73,14 @@ namespace DogStation.DAO
             return true;
         }
 
-
+        public void BeAdopted(Dog dog, long userId)
+        {
+            db.Dog.Attach(dog);
+            dog.adopter = userId;
+            dog.adoptTime = DateTime.Now;
+            db.Entry(dog).Property(d => d.adopter).IsModified = true;
+            db.Entry(dog).Property(d => d.adoptTime).IsModified = true;
+            db.SaveChangesAsync();
+        }
     }
 }

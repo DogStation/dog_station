@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DogStation
+namespace DogStation.Models
 {
     using System;
     using System.Data.Entity;
@@ -27,12 +27,12 @@ namespace DogStation
     
         public virtual DbSet<Activity> Activity { get; set; }
         public virtual DbSet<Admin> Admin { get; set; }
-        public virtual DbSet<AdoptedDog> AdoptedDog { get; set; }
         public virtual DbSet<Comment> Comment { get; set; }
         public virtual DbSet<Dog> Dog { get; set; }
         public virtual DbSet<DogLover> DogLover { get; set; }
         public virtual DbSet<DonateItem> DonateItem { get; set; }
         public virtual DbSet<DonateRecord> DonateRecord { get; set; }
+        public virtual DbSet<Follow> Follow { get; set; }
         public virtual DbSet<Inventory> Inventory { get; set; }
     }
 }

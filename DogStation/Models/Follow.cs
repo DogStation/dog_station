@@ -7,20 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DogStation
+namespace DogStation.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Comment
+    public partial class Follow
     {
-        public long idComment { get; set; }
-        public Nullable<long> commenter { get; set; }
-        public Nullable<long> dog { get; set; }
-        public string content { get; set; }
-        public Nullable<System.DateTime> commentTime { get; set; }
+        public long lover_ { get; set; }
+        public long dog_ { get; set; }
+        public Nullable<System.DateTime> followTime { get; set; }
     
+        public virtual Dog Dog { get; set; }
         public virtual DogLover DogLover { get; set; }
-        public virtual Dog Dog1 { get; set; }
     }
 }

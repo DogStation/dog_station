@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DogStation
+namespace DogStation.Models
 {
     using System;
     using System.Collections.Generic;

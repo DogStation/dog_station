@@ -9,9 +9,9 @@ namespace DogStation.DAO.Interfaces
     public interface IRepository<T>
     {
         List<T> GetAll();
-        T Get(int id);
+        T Get(long id);
         T Add(T t);
         bool Update(T t);
-        T Delete(int id);
+        T Delete(long id);
     }
 }

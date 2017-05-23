@@ -33,103 +33,101 @@
           <Property Name="post" Type="varchar" MaxLength="255" />
           <Property Name="postTime" Type="datetime" Precision="0" />
         </EntityType>
-        <EntityType Name="AdoptedDog">
-          <Key>
-            <PropertyRef Name="idAdoptedDog" />
-          </Key>
-          <Property Name="idAdoptedDog" Type="uint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="255" />
-          <Property Name="gender" Type="char" MaxLength="1" />
-          <Property Name="kind" Type="varchar" MaxLength="255" />
-          <Property Name="figure" Type="varchar" MaxLength="255" />
-          <Property Name="sender_" Type="uint" />
-          <Property Name="adopter_" Type="uint" />
-          <Property Name="sendTime" Type="timestamp" Precision="0" />
-          <Property Name="adoptTime" Type="timestamp" Precision="0" />
-        </EntityType>
         <EntityType Name="Comment">
           <Key>
             <PropertyRef Name="idComment" />
           </Key>
           <Property Name="idComment" Type="uint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="commenter" Type="uint" />
-          <Property Name="dog" Type="uint" />
-          <Property Name="content" Type="mediumtext" />
-          <Property Name="commentTime" Type="timestamp" Precision="0" />
+          <Property Name="commenter" Type="uint" Nullable="false" />
+          <Property Name="dog" Type="uint" Nullable="false" />
+          <Property Name="content" Type="mediumtext" Nullable="false" />
+          <Property Name="commentTime" Type="timestamp" Precision="0" Nullable="false" />
         </EntityType>
         <EntityType Name="Dog">
           <Key>
             <PropertyRef Name="idDog" />
           </Key>
-          <Property Name="idDog" Type="uint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="idDog" Type="uint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="255" />
           <Property Name="gender" Type="char" MaxLength="1" />
           <Property Name="kind" Type="varchar" MaxLength="255" />
           <Property Name="figure" Type="varchar" MaxLength="255" />
-          <Property Name="sender" Type="uint" />
-          <Property Name="sendTime" Type="timestamp" Precision="0" />
+          <Property Name="sender" Type="uint" Nullable="false" />
+          <Property Name="sendTime" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="adopter" Type="uint" />
+          <Property Name="adoptTime" Type="timestamp" Precision="0" />
+          <Property Name="loves" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="DogLover">
           <Key>
             <PropertyRef Name="idUser" />
           </Key>
           <Property Name="idUser" Type="uint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="255" />
-          <Property Name="password" Type="varchar" MaxLength="255" />
+          <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="gender" Type="char" MaxLength="1" />
           <Property Name="tel" Type="varchar" MaxLength="45" />
           <Property Name="email" Type="varchar" MaxLength="255" />
           <Property Name="figure" Type="varchar" MaxLength="255" />
-          <Property Name="loves" Type="int" />
-          <Property Name="adoptDogs" Type="int" />
-          <Property Name="loveDogs" Type="varchar" MaxLength="1000" />
+          <Property Name="loves" Type="int" Nullable="false" />
+          <Property Name="adoptDogs" Type="int" Nullable="false" />
+          <Property Name="loveDogs" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="DonateItem">
           <Key>
             <PropertyRef Name="idDonateItem" />
           </Key>
           <Property Name="idDonateItem" Type="uint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="record" Type="uint" />
-          <Property Name="category" Type="varchar" MaxLength="255" />
-          <Property Name="name" Type="varchar" MaxLength="255" />
-          <Property Name="number" Type="int" />
-          <Property Name="unit" Type="varchar" MaxLength="45" />
+          <Property Name="record" Type="uint" Nullable="false" />
+          <Property Name="category" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="number" Type="int" Nullable="false" />
+          <Property Name="unit" Type="varchar" MaxLength="45" Nullable="false" />
         </EntityType>
         <EntityType Name="DonateRecord">
           <Key>
             <PropertyRef Name="idDonateRecord" />
           </Key>
           <Property Name="idDonateRecord" Type="uint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="lover" Type="uint" />
+          <Property Name="lover" Type="uint" Nullable="false" />
           <Property Name="items" Type="int" />
           <Property Name="lovesInc" Type="int" />
-          <Property Name="donateTime" Type="timestamp" Precision="0" />
+          <Property Name="donateTime" Type="timestamp" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Follow">
+          <Key>
+            <PropertyRef Name="lover_" />
+            <PropertyRef Name="dog_" />
+          </Key>
+          <Property Name="lover_" Type="uint" Nullable="false" />
+          <Property Name="dog_" Type="uint" Nullable="false" />
+          <Property Name="followTime" Type="timestamp" Precision="0" />
         </EntityType>
         <EntityType Name="Inventory">
           <Key>
             <PropertyRef Name="idInventory" />
           </Key>
           <Property Name="idInventory" Type="uint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="category" Type="varchar" MaxLength="255" />
-          <Property Name="name" Type="varchar" MaxLength="255" />
+          <Property Name="category" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="desc" Type="varchar" MaxLength="255" />
-          <Property Name="quantity" Type="int" />
-          <Property Name="unit" Type="varchar" MaxLength="45" />
+          <Property Name="quantity" Type="int" Nullable="false" />
+          <Property Name="unit" Type="varchar" MaxLength="45" Nullable="false" />
         </EntityType>
-        <Association Name="adopter_">
+        <Association Name="adopter">
           <End Role="DogLover" Type="Self.DogLover" Multiplicity="0..1" />
-          <End Role="AdoptedDog" Type="Self.AdoptedDog" Multiplicity="*" />
+          <End Role="Dog" Type="Self.Dog" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DogLover">
               <PropertyRef Name="idUser" />
             </Principal>
-            <Dependent Role="AdoptedDog">
-              <PropertyRef Name="adopter_" />
+            <Dependent Role="Dog">
+              <PropertyRef Name="adopter" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="commenter">
-          <End Role="DogLover" Type="Self.DogLover" Multiplicity="0..1" />
+          <End Role="DogLover" Type="Self.DogLover" Multiplicity="1" />
           <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DogLover">
@@ -141,7 +139,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="dog1">
-          <End Role="Dog" Type="Self.Dog" Multiplicity="0..1" />
+          <End Role="Dog" Type="Self.Dog" Multiplicity="1" />
           <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Dog">
@@ -152,8 +150,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="dog_">
+          <End Role="Dog" Type="Self.Dog" Multiplicity="1" />
+          <End Role="Follow" Type="Self.Follow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dog">
+              <PropertyRef Name="idDog" />
+            </Principal>
+            <Dependent Role="Follow">
+              <PropertyRef Name="dog_" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="lover">
-          <End Role="DogLover" Type="Self.DogLover" Multiplicity="0..1" />
+          <End Role="DogLover" Type="Self.DogLover" Multiplicity="1" />
           <End Role="DonateRecord" Type="Self.DonateRecord" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DogLover">
@@ -164,8 +174,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="lover_">
+          <End Role="DogLover" Type="Self.DogLover" Multiplicity="1" />
+          <End Role="Follow" Type="Self.Follow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DogLover">
+              <PropertyRef Name="idUser" />
+            </Principal>
+            <Dependent Role="Follow">
+              <PropertyRef Name="lover_" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="reocrd">
-          <End Role="DonateRecord" Type="Self.DonateRecord" Multiplicity="0..1" />
+          <End Role="DonateRecord" Type="Self.DonateRecord" Multiplicity="1" />
           <End Role="DonateItem" Type="Self.DonateItem" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DonateRecord">
@@ -177,7 +199,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="sender">
-          <End Role="DogLover" Type="Self.DogLover" Multiplicity="0..1" />
+          <End Role="DogLover" Type="Self.DogLover" Multiplicity="1" />
           <End Role="Dog" Type="Self.Dog" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DogLover">
@@ -188,31 +210,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="sender_">
-          <End Role="DogLover" Type="Self.DogLover" Multiplicity="0..1" />
-          <End Role="AdoptedDog" Type="Self.AdoptedDog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DogLover">
-              <PropertyRef Name="idUser" />
-            </Principal>
-            <Dependent Role="AdoptedDog">
-              <PropertyRef Name="sender_" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="dog_stationModelStoreContainer">
           <EntitySet Name="Activity" EntityType="Self.Activity" Schema="dog_station" store:Type="Tables" />
           <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dog_station" store:Type="Tables" />
-          <EntitySet Name="AdoptedDog" EntityType="Self.AdoptedDog" Schema="dog_station" store:Type="Tables" />
           <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dog_station" store:Type="Tables" />
           <EntitySet Name="Dog" EntityType="Self.Dog" Schema="dog_station" store:Type="Tables" />
           <EntitySet Name="DogLover" EntityType="Self.DogLover" Schema="dog_station" store:Type="Tables" />
           <EntitySet Name="DonateItem" EntityType="Self.DonateItem" Schema="dog_station" store:Type="Tables" />
           <EntitySet Name="DonateRecord" EntityType="Self.DonateRecord" Schema="dog_station" store:Type="Tables" />
+          <EntitySet Name="Follow" EntityType="Self.Follow" Schema="dog_station" store:Type="Tables" />
           <EntitySet Name="Inventory" EntityType="Self.Inventory" Schema="dog_station" store:Type="Tables" />
-          <AssociationSet Name="adopter_" Association="Self.adopter_">
+          <AssociationSet Name="adopter" Association="Self.adopter">
             <End Role="DogLover" EntitySet="DogLover" />
-            <End Role="AdoptedDog" EntitySet="AdoptedDog" />
+            <End Role="Dog" EntitySet="Dog" />
           </AssociationSet>
           <AssociationSet Name="commenter" Association="Self.commenter">
             <End Role="DogLover" EntitySet="DogLover" />
@@ -222,9 +232,17 @@
             <End Role="Dog" EntitySet="Dog" />
             <End Role="Comment" EntitySet="Comment" />
           </AssociationSet>
+          <AssociationSet Name="dog_" Association="Self.dog_">
+            <End Role="Dog" EntitySet="Dog" />
+            <End Role="Follow" EntitySet="Follow" />
+          </AssociationSet>
           <AssociationSet Name="lover" Association="Self.lover">
             <End Role="DogLover" EntitySet="DogLover" />
             <End Role="DonateRecord" EntitySet="DonateRecord" />
+          </AssociationSet>
+          <AssociationSet Name="lover_" Association="Self.lover_">
+            <End Role="DogLover" EntitySet="DogLover" />
+            <End Role="Follow" EntitySet="Follow" />
           </AssociationSet>
           <AssociationSet Name="reocrd" Association="Self.reocrd">
             <End Role="DonateRecord" EntitySet="DonateRecord" />
@@ -233,10 +251,6 @@
           <AssociationSet Name="sender" Association="Self.sender">
             <End Role="DogLover" EntitySet="DogLover" />
             <End Role="Dog" EntitySet="Dog" />
-          </AssociationSet>
-          <AssociationSet Name="sender_" Association="Self.sender_">
-            <End Role="DogLover" EntitySet="DogLover" />
-            <End Role="AdoptedDog" EntitySet="AdoptedDog" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -272,31 +286,15 @@
           <Property Name="post" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="postTime" Type="DateTime" />
         </EntityType>
-        <EntityType Name="AdoptedDog">
-          <Key>
-            <PropertyRef Name="idAdoptedDog" />
-          </Key>
-          <Property Name="idAdoptedDog" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="gender" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="kind" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="figure" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="sender_" Type="Int64" />
-          <Property Name="adopter_" Type="Int64" />
-          <Property Name="sendTime" Type="DateTime" />
-          <Property Name="adoptTime" Type="DateTime" />
-          <NavigationProperty Name="DogLover" Relationship="Self.adopter_" FromRole="AdoptedDog" ToRole="DogLover" />
-          <NavigationProperty Name="DogLover1" Relationship="Self.sender_" FromRole="AdoptedDog" ToRole="DogLover" />
-        </EntityType>
         <EntityType Name="Comment">
           <Key>
             <PropertyRef Name="idComment" />
           </Key>
           <Property Name="idComment" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="commenter" Type="Int64" />
-          <Property Name="dog" Type="Int64" />
-          <Property Name="content" Type="String" MaxLength="16777215" FixedLength="false" Unicode="false" />
-          <Property Name="commentTime" Type="DateTime" />
+          <Property Name="commenter" Type="Int64" Nullable="false" />
+          <Property Name="dog" Type="Int64" Nullable="false" />
+          <Property Name="content" Type="String" MaxLength="16777215" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="commentTime" Type="DateTime" Nullable="false" />
           <NavigationProperty Name="DogLover" Relationship="Self.commenter" FromRole="Comment" ToRole="DogLover" />
           <NavigationProperty Name="Dog1" Relationship="Self.dog1" FromRole="Comment" ToRole="Dog" />
         </EntityType>
@@ -309,41 +307,46 @@
           <Property Name="gender" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="kind" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="figure" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="sender" Type="Int64" />
-          <Property Name="sendTime" Type="DateTime" />
+          <Property Name="sender" Type="Int64" Nullable="false" />
+          <Property Name="sendTime" Type="DateTime" Nullable="false" />
+          <Property Name="adopter" Type="Int64" />
+          <Property Name="adoptTime" Type="DateTime" />
+          <Property Name="loves" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Comment" Relationship="Self.dog1" FromRole="Dog" ToRole="Comment" />
-          <NavigationProperty Name="DogLover" Relationship="Self.sender" FromRole="Dog" ToRole="DogLover" />
+          <NavigationProperty Name="DogLover" Relationship="Self.adopter" FromRole="Dog" ToRole="DogLover" />
+          <NavigationProperty Name="Follow" Relationship="Self.dog_" FromRole="Dog" ToRole="Follow" />
+          <NavigationProperty Name="DogLover1" Relationship="Self.sender" FromRole="Dog" ToRole="DogLover" />
         </EntityType>
         <EntityType Name="DogLover">
           <Key>
             <PropertyRef Name="idUser" />
           </Key>
           <Property Name="idUser" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="gender" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="tel" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="figure" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="loves" Type="Int32" />
-          <Property Name="adoptDogs" Type="Int32" />
-          <Property Name="loveDogs" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="AdoptedDog" Relationship="Self.adopter_" FromRole="DogLover" ToRole="AdoptedDog" />
-          <NavigationProperty Name="AdoptedDog1" Relationship="Self.sender_" FromRole="DogLover" ToRole="AdoptedDog" />
+          <Property Name="loves" Type="Int32" Nullable="false" />
+          <Property Name="adoptDogs" Type="Int32" Nullable="false" />
+          <Property Name="loveDogs" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Comment" Relationship="Self.commenter" FromRole="DogLover" ToRole="Comment" />
-          <NavigationProperty Name="Dog" Relationship="Self.sender" FromRole="DogLover" ToRole="Dog" />
+          <NavigationProperty Name="Dog" Relationship="Self.adopter" FromRole="DogLover" ToRole="Dog" />
+          <NavigationProperty Name="Dog1" Relationship="Self.sender" FromRole="DogLover" ToRole="Dog" />
           <NavigationProperty Name="DonateRecord" Relationship="Self.lover" FromRole="DogLover" ToRole="DonateRecord" />
+          <NavigationProperty Name="Follow" Relationship="Self.lover_" FromRole="DogLover" ToRole="Follow" />
         </EntityType>
         <EntityType Name="DonateItem">
           <Key>
             <PropertyRef Name="idDonateItem" />
           </Key>
           <Property Name="idDonateItem" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="record" Type="Int64" />
-          <Property Name="category" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="number" Type="Int32" />
-          <Property Name="unit" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="record" Type="Int64" Nullable="false" />
+          <Property Name="category" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="number" Type="Int32" Nullable="false" />
+          <Property Name="unit" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="DonateRecord" Relationship="Self.reocrd" FromRole="DonateItem" ToRole="DonateRecord" />
         </EntityType>
         <EntityType Name="DonateRecord">
@@ -351,50 +354,37 @@
             <PropertyRef Name="idDonateRecord" />
           </Key>
           <Property Name="idDonateRecord" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="lover" Type="Int64" />
+          <Property Name="lover" Type="Int64" Nullable="false" />
           <Property Name="items" Type="Int32" />
           <Property Name="lovesInc" Type="Int32" />
-          <Property Name="donateTime" Type="DateTime" />
+          <Property Name="donateTime" Type="DateTime" Nullable="false" />
           <NavigationProperty Name="DogLover" Relationship="Self.lover" FromRole="DonateRecord" ToRole="DogLover" />
           <NavigationProperty Name="DonateItem" Relationship="Self.reocrd" FromRole="DonateRecord" ToRole="DonateItem" />
+        </EntityType>
+        <EntityType Name="Follow">
+          <Key>
+            <PropertyRef Name="lover_" />
+            <PropertyRef Name="dog_" />
+          </Key>
+          <Property Name="lover_" Type="Int64" Nullable="false" />
+          <Property Name="dog_" Type="Int64" Nullable="false" />
+          <Property Name="followTime" Type="DateTime" />
+          <NavigationProperty Name="Dog" Relationship="Self.dog_" FromRole="Follow" ToRole="Dog" />
+          <NavigationProperty Name="DogLover" Relationship="Self.lover_" FromRole="Follow" ToRole="DogLover" />
         </EntityType>
         <EntityType Name="Inventory">
           <Key>
             <PropertyRef Name="idInventory" />
           </Key>
           <Property Name="idInventory" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="category" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="category" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="desc" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="quantity" Type="Int32" />
-          <Property Name="unit" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="quantity" Type="Int32" Nullable="false" />
+          <Property Name="unit" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
-        <Association Name="adopter_">
-          <End Role="DogLover" Type="Self.DogLover" Multiplicity="0..1" />
-          <End Role="AdoptedDog" Type="Self.AdoptedDog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DogLover">
-              <PropertyRef Name="idUser" />
-            </Principal>
-            <Dependent Role="AdoptedDog">
-              <PropertyRef Name="adopter_" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="sender_">
-          <End Role="DogLover" Type="Self.DogLover" Multiplicity="0..1" />
-          <End Role="AdoptedDog" Type="Self.AdoptedDog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DogLover">
-              <PropertyRef Name="idUser" />
-            </Principal>
-            <Dependent Role="AdoptedDog">
-              <PropertyRef Name="sender_" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="commenter">
-          <End Role="DogLover" Type="Self.DogLover" Multiplicity="0..1" />
+          <End Role="DogLover" Type="Self.DogLover" Multiplicity="1" />
           <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DogLover">
@@ -406,7 +396,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="dog1">
-          <End Role="Dog" Type="Self.Dog" Multiplicity="0..1" />
+          <End Role="Dog" Type="Self.Dog" Multiplicity="1" />
           <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Dog">
@@ -417,8 +407,32 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="sender">
+        <Association Name="adopter">
           <End Role="DogLover" Type="Self.DogLover" Multiplicity="0..1" />
+          <End Role="Dog" Type="Self.Dog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DogLover">
+              <PropertyRef Name="idUser" />
+            </Principal>
+            <Dependent Role="Dog">
+              <PropertyRef Name="adopter" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="dog_">
+          <End Role="Dog" Type="Self.Dog" Multiplicity="1" />
+          <End Role="Follow" Type="Self.Follow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dog">
+              <PropertyRef Name="idDog" />
+            </Principal>
+            <Dependent Role="Follow">
+              <PropertyRef Name="dog_" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="sender">
+          <End Role="DogLover" Type="Self.DogLover" Multiplicity="1" />
           <End Role="Dog" Type="Self.Dog" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DogLover">
@@ -430,7 +444,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="lover">
-          <End Role="DogLover" Type="Self.DogLover" Multiplicity="0..1" />
+          <End Role="DogLover" Type="Self.DogLover" Multiplicity="1" />
           <End Role="DonateRecord" Type="Self.DonateRecord" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DogLover">
@@ -441,8 +455,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="lover_">
+          <End Role="DogLover" Type="Self.DogLover" Multiplicity="1" />
+          <End Role="Follow" Type="Self.Follow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DogLover">
+              <PropertyRef Name="idUser" />
+            </Principal>
+            <Dependent Role="Follow">
+              <PropertyRef Name="lover_" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="reocrd">
-          <End Role="DonateRecord" Type="Self.DonateRecord" Multiplicity="0..1" />
+          <End Role="DonateRecord" Type="Self.DonateRecord" Multiplicity="1" />
           <End Role="DonateItem" Type="Self.DonateItem" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DonateRecord">
@@ -456,21 +482,13 @@
         <EntityContainer Name="dog_stationEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Activity" EntityType="Self.Activity" />
           <EntitySet Name="Admin" EntityType="Self.Admin" />
-          <EntitySet Name="AdoptedDog" EntityType="Self.AdoptedDog" />
           <EntitySet Name="Comment" EntityType="Self.Comment" />
           <EntitySet Name="Dog" EntityType="Self.Dog" />
           <EntitySet Name="DogLover" EntityType="Self.DogLover" />
           <EntitySet Name="DonateItem" EntityType="Self.DonateItem" />
           <EntitySet Name="DonateRecord" EntityType="Self.DonateRecord" />
+          <EntitySet Name="Follow" EntityType="Self.Follow" />
           <EntitySet Name="Inventory" EntityType="Self.Inventory" />
-          <AssociationSet Name="adopter_" Association="Self.adopter_">
-            <End Role="DogLover" EntitySet="DogLover" />
-            <End Role="AdoptedDog" EntitySet="AdoptedDog" />
-          </AssociationSet>
-          <AssociationSet Name="sender_" Association="Self.sender_">
-            <End Role="DogLover" EntitySet="DogLover" />
-            <End Role="AdoptedDog" EntitySet="AdoptedDog" />
-          </AssociationSet>
           <AssociationSet Name="commenter" Association="Self.commenter">
             <End Role="DogLover" EntitySet="DogLover" />
             <End Role="Comment" EntitySet="Comment" />
@@ -479,6 +497,14 @@
             <End Role="Dog" EntitySet="Dog" />
             <End Role="Comment" EntitySet="Comment" />
           </AssociationSet>
+          <AssociationSet Name="adopter" Association="Self.adopter">
+            <End Role="DogLover" EntitySet="DogLover" />
+            <End Role="Dog" EntitySet="Dog" />
+          </AssociationSet>
+          <AssociationSet Name="dog_" Association="Self.dog_">
+            <End Role="Dog" EntitySet="Dog" />
+            <End Role="Follow" EntitySet="Follow" />
+          </AssociationSet>
           <AssociationSet Name="sender" Association="Self.sender">
             <End Role="DogLover" EntitySet="DogLover" />
             <End Role="Dog" EntitySet="Dog" />
@@ -486,6 +512,10 @@
           <AssociationSet Name="lover" Association="Self.lover">
             <End Role="DogLover" EntitySet="DogLover" />
             <End Role="DonateRecord" EntitySet="DonateRecord" />
+          </AssociationSet>
+          <AssociationSet Name="lover_" Association="Self.lover_">
+            <End Role="DogLover" EntitySet="DogLover" />
+            <End Role="Follow" EntitySet="Follow" />
           </AssociationSet>
           <AssociationSet Name="reocrd" Association="Self.reocrd">
             <End Role="DonateRecord" EntitySet="DonateRecord" />
@@ -528,21 +558,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="AdoptedDog">
-            <EntityTypeMapping TypeName="dog_stationModel.AdoptedDog">
-              <MappingFragment StoreEntitySet="AdoptedDog">
-                <ScalarProperty Name="idAdoptedDog" ColumnName="idAdoptedDog" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="gender" ColumnName="gender" />
-                <ScalarProperty Name="kind" ColumnName="kind" />
-                <ScalarProperty Name="figure" ColumnName="figure" />
-                <ScalarProperty Name="sender_" ColumnName="sender_" />
-                <ScalarProperty Name="adopter_" ColumnName="adopter_" />
-                <ScalarProperty Name="sendTime" ColumnName="sendTime" />
-                <ScalarProperty Name="adoptTime" ColumnName="adoptTime" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Comment">
             <EntityTypeMapping TypeName="dog_stationModel.Comment">
               <MappingFragment StoreEntitySet="Comment">
@@ -564,6 +579,9 @@
                 <ScalarProperty Name="figure" ColumnName="figure" />
                 <ScalarProperty Name="sender" ColumnName="sender" />
                 <ScalarProperty Name="sendTime" ColumnName="sendTime" />
+                <ScalarProperty Name="adopter" ColumnName="adopter" />
+                <ScalarProperty Name="adoptTime" ColumnName="adoptTime" />
+                <ScalarProperty Name="loves" ColumnName="loves" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -603,6 +621,15 @@
                 <ScalarProperty Name="items" ColumnName="items" />
                 <ScalarProperty Name="lovesInc" ColumnName="lovesInc" />
                 <ScalarProperty Name="donateTime" ColumnName="donateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Follow">
+            <EntityTypeMapping TypeName="dog_stationModel.Follow">
+              <MappingFragment StoreEntitySet="Follow">
+                <ScalarProperty Name="lover_" ColumnName="lover_" />
+                <ScalarProperty Name="dog_" ColumnName="dog_" />
+                <ScalarProperty Name="followTime" ColumnName="followTime" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

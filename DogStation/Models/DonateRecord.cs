@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DogStation
+namespace DogStation.Models
 {
     using System;
     using System.Collections.Generic;
@@ -21,10 +21,10 @@ namespace DogStation
         }
     
         public long idDonateRecord { get; set; }
-        public Nullable<long> lover { get; set; }
+        public long lover { get; set; }
         public Nullable<int> items { get; set; }
         public Nullable<int> lovesInc { get; set; }
-        public Nullable<System.DateTime> donateTime { get; set; }
+        public System.DateTime donateTime { get; set; }
     
         public virtual DogLover DogLover { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

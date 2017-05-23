@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Autofac;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -20,7 +21,13 @@ namespace DogStation
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
 
-        protected void Application_PostAuthorizeRequest()
+        public override void Init()
+        {
+            PostAuthenticateRequest += Application_PostAuthorizeRequest;
+            base.Init();
+        }
+
+        protected void Application_PostAuthorizeRequest(object sender, EventArgs e)
         {
             HttpContext.Current.SetSessionStateBehavior(System.Web.SessionState.SessionStateBehavior.Required);
         }

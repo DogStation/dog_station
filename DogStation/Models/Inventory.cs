@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DogStation
+namespace DogStation.Models
 {
     using System;
     using System.Collections.Generic;
@@ -18,7 +18,7 @@ namespace DogStation
         public string category { get; set; }
         public string name { get; set; }
         public string desc { get; set; }
-        public Nullable<int> quantity { get; set; }
+        public int quantity { get; set; }
         public string unit { get; set; }
     }
 }

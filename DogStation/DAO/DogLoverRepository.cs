@@ -1,8 +1,10 @@
 ﻿using DogStation.DAO.Interfaces;
+using DogStation.Models;
 using DogStation.Utils;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Web;
 
@@ -24,12 +26,12 @@ namespace DogStation.DAO
             return t;
         }
 
-        public DogLover Delete(int id)
+        public DogLover Delete(long id)
         {
             throw new NotImplementedException();
         }
 
-        public DogLover Get(int id)
+        public DogLover Get(long id)
         {
             return db.DogLover.Find(id);
         }
@@ -46,13 +48,50 @@ namespace DogStation.DAO
             return true;
         }
 
+        public long GetId(string username)
+        {
+            DogLover lover = GetUserByName(username);
+            return lover == null ? 0 : lover.idUser;
+        }
+
         public string GetPw(string username)
         {
-            var query = from lover in db.DogLover
-                        where lover.name == username
-                        select lover;
-            List<DogLover> list = query.ToList();
-            return list.Count() == 0 ? null : list[0].password;
+            DogLover lover = GetUserByName(username);
+            return lover == null ? null : lover.password;
         }
+
+        private DogLover GetUserByName(string username)
+        {
+            DogLover lover = db.DogLover.Where(d => d.name == username).SingleOrDefault();
+            return lover;
+        }
+
+        public void IncLoves(long loverId, int inc)
+        {
+            DogLover lover = Get(loverId);
+            lover.loves += inc;
+            db.Entry(lover).Property(l => l.loves).IsModified = true;
+            db.SaveChangesAsync();
+        }
+
+        public void AdoptDog(DogLover lover, int dec)
+        {
+            db.DogLover.Attach(lover);
+            lover.loves -= dec;
+            lover.adoptDogs += 1;
+            db.Entry(lover).Property(l => l.loves).IsModified = true;
+            db.Entry(lover).Property(l => l.adoptDogs).IsModified = true;
+            db.SaveChangesAsync();
+        }
+
+        public void UpdateFollow(DogLover lover, int c)
+        {
+            db.DogLover.Attach(lover);
+            lover.loveDogs += c;
+            db.Entry(lover).Property(l => l.loveDogs).IsModified = true;
+            db.SaveChangesAsync();
+        }
+
+        
     }
 }

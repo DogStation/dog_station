@@ -7,20 +7,23 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DogStation
+namespace DogStation.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class DonateItem
+    public partial class Admin
     {
-        public long idDonateItem { get; set; }
-        public Nullable<long> record { get; set; }
-        public string category { get; set; }
+        public long idAdmin { get; set; }
         public string name { get; set; }
-        public Nullable<int> number { get; set; }
-        public string unit { get; set; }
-    
-        public virtual DonateRecord DonateRecord { get; set; }
+        public string password { get; set; }
+        public string gender { get; set; }
+        public string tel { get; set; }
+        public string email { get; set; }
+        public string figure { get; set; }
+        public string motto { get; set; }
+        public Nullable<System.DateTime> birth { get; set; }
+        public string post { get; set; }
+        public Nullable<System.DateTime> postTime { get; set; }
     }
 }
