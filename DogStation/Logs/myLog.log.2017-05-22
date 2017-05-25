@@ -1,6 +1,0 @@
-2017-05-22 15:03:33,904 DogStation.Controllers.AccountController DEBUG - name:°¬ÁÁ pw:123 #26
-2017-05-22 15:29:21,527 DogStation.Controllers.AccountController DEBUG - name:°¬ÁÁ pw:123 #26
-2017-05-22 15:31:30,319 DogStation.Controllers.AccountController DEBUG - name:°¬ÁÁ pw:123 #26
-2017-05-22 15:31:30,522 DogStation.Services.AccountService DEBUG - Cookie[Token] exists #31
-2017-05-22 15:42:24,663 DogStation.Controllers.AccountController DEBUG - name:ÂÀ½ð»ª pw:123 #26
-2017-05-22 15:42:25,491 DogStation.Services.AccountService DEBUG - Cookie[Token] exists #31

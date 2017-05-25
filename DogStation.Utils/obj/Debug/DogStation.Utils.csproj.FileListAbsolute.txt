@@ -1,5 +1,0 @@
-D:\Programs\Visual Studio 2017\Projects\C#\dog_station\DogStation.Utils\bin\Debug\DogStation.Utils.dll
-D:\Programs\Visual Studio 2017\Projects\C#\dog_station\DogStation.Utils\bin\Debug\DogStation.Utils.pdb
-D:\Programs\Visual Studio 2017\Projects\C#\dog_station\DogStation.Utils\obj\Debug\DogStation.Utils.csprojResolveAssemblyReference.cache
-D:\Programs\Visual Studio 2017\Projects\C#\dog_station\DogStation.Utils\obj\Debug\DogStation.Utils.dll
-D:\Programs\Visual Studio 2017\Projects\C#\dog_station\DogStation.Utils\obj\Debug\DogStation.Utils.pdb
