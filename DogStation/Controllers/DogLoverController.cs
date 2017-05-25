@@ -1,4 +1,5 @@
-﻿using DogStation.Services;
+﻿using DogStation.IServices;
+using DogStation.Entity.Models;
 using DogStation.Utils;
 using System;
 using System.Collections.Generic;
@@ -6,13 +7,16 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Microsoft.Practices.Unity;
 
 namespace DogStation.Controllers
 {
     [RoutePrefix("api/lovers")]
     public class DogLoverController : ApiController
     {
-        static readonly DogLoverService loverService = new DogLoverService();
+        [Dependency]
+        public IDogLoverService loverService { get; set; }
+
         [SupportFilter]
         [HttpPost, Route("lover/donate")]
         public HttpResponseMessage Donate(List<DonateItem> data)

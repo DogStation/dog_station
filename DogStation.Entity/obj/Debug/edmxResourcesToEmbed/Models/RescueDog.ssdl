@@ -1,0 +1,251 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="dog_stationModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Activity">
+    <Key>
+      <PropertyRef Name="idActivity" />
+    </Key>
+    <Property Name="idActivity" Type="uint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="admins" Type="varchar" MaxLength="255" />
+    <Property Name="lovers" Type="varchar" MaxLength="255" />
+    <Property Name="dogs" Type="varchar" MaxLength="255" />
+    <Property Name="kind" Type="varchar" MaxLength="255" />
+    <Property Name="desc" Type="mediumtext" />
+    <Property Name="images" Type="text" />
+  </EntityType>
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="idAdmin" />
+    </Key>
+    <Property Name="idAdmin" Type="uint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="255" />
+    <Property Name="password" Type="varchar" MaxLength="255" />
+    <Property Name="gender" Type="char" MaxLength="1" />
+    <Property Name="tel" Type="varchar" MaxLength="45" />
+    <Property Name="email" Type="varchar" MaxLength="255" />
+    <Property Name="figure" Type="varchar" MaxLength="255" />
+    <Property Name="motto" Type="varchar" MaxLength="255" />
+    <Property Name="birth" Type="datetime" Precision="0" />
+    <Property Name="post" Type="varchar" MaxLength="255" />
+    <Property Name="postTime" Type="datetime" Precision="0" />
+  </EntityType>
+  <EntityType Name="Comment">
+    <Key>
+      <PropertyRef Name="idComment" />
+    </Key>
+    <Property Name="idComment" Type="uint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="commenter" Type="uint" Nullable="false" />
+    <Property Name="dog" Type="uint" Nullable="false" />
+    <Property Name="content" Type="mediumtext" Nullable="false" />
+    <Property Name="commentTime" Type="timestamp" Precision="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Dog">
+    <Key>
+      <PropertyRef Name="idDog" />
+    </Key>
+    <Property Name="idDog" Type="uint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="255" />
+    <Property Name="gender" Type="char" MaxLength="1" />
+    <Property Name="kind" Type="varchar" MaxLength="255" />
+    <Property Name="figure" Type="varchar" MaxLength="255" />
+    <Property Name="sender" Type="uint" Nullable="false" />
+    <Property Name="sendTime" Type="timestamp" Precision="0" Nullable="false" />
+    <Property Name="adopter" Type="uint" />
+    <Property Name="adoptTime" Type="timestamp" Precision="0" />
+    <Property Name="loves" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DogLover">
+    <Key>
+      <PropertyRef Name="idUser" />
+    </Key>
+    <Property Name="idUser" Type="uint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="password" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="gender" Type="char" MaxLength="1" />
+    <Property Name="tel" Type="varchar" MaxLength="45" />
+    <Property Name="email" Type="varchar" MaxLength="255" />
+    <Property Name="figure" Type="varchar" MaxLength="255" />
+    <Property Name="loves" Type="int" Nullable="false" />
+    <Property Name="adoptDogs" Type="int" Nullable="false" />
+    <Property Name="loveDogs" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DonateItem">
+    <Key>
+      <PropertyRef Name="idDonateItem" />
+    </Key>
+    <Property Name="idDonateItem" Type="uint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="record" Type="uint" Nullable="false" />
+    <Property Name="category" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="number" Type="int" Nullable="false" />
+    <Property Name="unit" Type="varchar" MaxLength="45" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DonateRecord">
+    <Key>
+      <PropertyRef Name="idDonateRecord" />
+    </Key>
+    <Property Name="idDonateRecord" Type="uint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="lover" Type="uint" Nullable="false" />
+    <Property Name="items" Type="int" />
+    <Property Name="lovesInc" Type="int" />
+    <Property Name="donateTime" Type="timestamp" Precision="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Follow">
+    <Key>
+      <PropertyRef Name="lover_" />
+      <PropertyRef Name="dog_" />
+    </Key>
+    <Property Name="lover_" Type="uint" Nullable="false" />
+    <Property Name="dog_" Type="uint" Nullable="false" />
+    <Property Name="followTime" Type="timestamp" Precision="0" />
+  </EntityType>
+  <EntityType Name="Inventory">
+    <Key>
+      <PropertyRef Name="idInventory" />
+    </Key>
+    <Property Name="idInventory" Type="uint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="category" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="desc" Type="varchar" MaxLength="255" />
+    <Property Name="quantity" Type="int" Nullable="false" />
+    <Property Name="unit" Type="varchar" MaxLength="45" Nullable="false" />
+  </EntityType>
+  <Association Name="adopter">
+    <End Role="DogLover" Type="Self.DogLover" Multiplicity="0..1" />
+    <End Role="Dog" Type="Self.Dog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DogLover">
+        <PropertyRef Name="idUser" />
+      </Principal>
+      <Dependent Role="Dog">
+        <PropertyRef Name="adopter" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="commenter">
+    <End Role="DogLover" Type="Self.DogLover" Multiplicity="1" />
+    <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DogLover">
+        <PropertyRef Name="idUser" />
+      </Principal>
+      <Dependent Role="Comment">
+        <PropertyRef Name="commenter" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="dog1">
+    <End Role="Dog" Type="Self.Dog" Multiplicity="1" />
+    <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dog">
+        <PropertyRef Name="idDog" />
+      </Principal>
+      <Dependent Role="Comment">
+        <PropertyRef Name="dog" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="dog_">
+    <End Role="Dog" Type="Self.Dog" Multiplicity="1" />
+    <End Role="Follow" Type="Self.Follow" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dog">
+        <PropertyRef Name="idDog" />
+      </Principal>
+      <Dependent Role="Follow">
+        <PropertyRef Name="dog_" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="lover">
+    <End Role="DogLover" Type="Self.DogLover" Multiplicity="1" />
+    <End Role="DonateRecord" Type="Self.DonateRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DogLover">
+        <PropertyRef Name="idUser" />
+      </Principal>
+      <Dependent Role="DonateRecord">
+        <PropertyRef Name="lover" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="lover_">
+    <End Role="DogLover" Type="Self.DogLover" Multiplicity="1" />
+    <End Role="Follow" Type="Self.Follow" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DogLover">
+        <PropertyRef Name="idUser" />
+      </Principal>
+      <Dependent Role="Follow">
+        <PropertyRef Name="lover_" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="reocrd">
+    <End Role="DonateRecord" Type="Self.DonateRecord" Multiplicity="1" />
+    <End Role="DonateItem" Type="Self.DonateItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DonateRecord">
+        <PropertyRef Name="idDonateRecord" />
+      </Principal>
+      <Dependent Role="DonateItem">
+        <PropertyRef Name="record" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="sender">
+    <End Role="DogLover" Type="Self.DogLover" Multiplicity="1" />
+    <End Role="Dog" Type="Self.Dog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DogLover">
+        <PropertyRef Name="idUser" />
+      </Principal>
+      <Dependent Role="Dog">
+        <PropertyRef Name="sender" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="dog_stationModelStoreContainer">
+    <EntitySet Name="Activity" EntityType="Self.Activity" Schema="dog_station" store:Type="Tables" />
+    <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dog_station" store:Type="Tables" />
+    <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dog_station" store:Type="Tables" />
+    <EntitySet Name="Dog" EntityType="Self.Dog" Schema="dog_station" store:Type="Tables" />
+    <EntitySet Name="DogLover" EntityType="Self.DogLover" Schema="dog_station" store:Type="Tables" />
+    <EntitySet Name="DonateItem" EntityType="Self.DonateItem" Schema="dog_station" store:Type="Tables" />
+    <EntitySet Name="DonateRecord" EntityType="Self.DonateRecord" Schema="dog_station" store:Type="Tables" />
+    <EntitySet Name="Follow" EntityType="Self.Follow" Schema="dog_station" store:Type="Tables" />
+    <EntitySet Name="Inventory" EntityType="Self.Inventory" Schema="dog_station" store:Type="Tables" />
+    <AssociationSet Name="adopter" Association="Self.adopter">
+      <End Role="DogLover" EntitySet="DogLover" />
+      <End Role="Dog" EntitySet="Dog" />
+    </AssociationSet>
+    <AssociationSet Name="commenter" Association="Self.commenter">
+      <End Role="DogLover" EntitySet="DogLover" />
+      <End Role="Comment" EntitySet="Comment" />
+    </AssociationSet>
+    <AssociationSet Name="dog1" Association="Self.dog1">
+      <End Role="Dog" EntitySet="Dog" />
+      <End Role="Comment" EntitySet="Comment" />
+    </AssociationSet>
+    <AssociationSet Name="dog_" Association="Self.dog_">
+      <End Role="Dog" EntitySet="Dog" />
+      <End Role="Follow" EntitySet="Follow" />
+    </AssociationSet>
+    <AssociationSet Name="lover" Association="Self.lover">
+      <End Role="DogLover" EntitySet="DogLover" />
+      <End Role="DonateRecord" EntitySet="DonateRecord" />
+    </AssociationSet>
+    <AssociationSet Name="lover_" Association="Self.lover_">
+      <End Role="DogLover" EntitySet="DogLover" />
+      <End Role="Follow" EntitySet="Follow" />
+    </AssociationSet>
+    <AssociationSet Name="reocrd" Association="Self.reocrd">
+      <End Role="DonateRecord" EntitySet="DonateRecord" />
+      <End Role="DonateItem" EntitySet="DonateItem" />
+    </AssociationSet>
+    <AssociationSet Name="sender" Association="Self.sender">
+      <End Role="DogLover" EntitySet="DogLover" />
+      <End Role="Dog" EntitySet="Dog" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

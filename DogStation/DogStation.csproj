@@ -146,6 +146,12 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.WebApi, Version=5.2.3.0, Culture=neutral, PublicKeyToken=43da31bc42a85347, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.WebAPI.5.2.3\lib\net45\Unity.WebApi.dll</HintPath>
+    </Reference>
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -179,17 +185,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DAO\ActivityRepository.cs" />
-    <Compile Include="DAO\InventoryRepository.cs" />
-    <Compile Include="Models\Activity.cs">
-      <DependentUpon>RescueStation.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Admin.cs">
-      <DependentUpon>RescueStation.tt</DependentUpon>
-    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
@@ -219,62 +218,16 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Compile Include="Models\Comment.cs">
-      <DependentUpon>RescueStation.tt</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DogController.cs" />
     <Compile Include="Controllers\DogLoverController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="DAO\DogLoverRepository.cs" />
-    <Compile Include="DAO\DogRepository.cs" />
-    <Compile Include="DAO\DonateRepository.cs" />
-    <Compile Include="DAO\FollowRepository.cs" />
-    <Compile Include="DAO\Interfaces\IRepository.cs" />
-    <Compile Include="Models\Dog.cs">
-      <DependentUpon>RescueStation.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DogLover.cs">
-      <DependentUpon>RescueStation.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DonateItem.cs">
-      <DependentUpon>RescueStation.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DonateRecord.cs">
-      <DependentUpon>RescueStation.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Follow.cs">
-      <DependentUpon>RescueStation.tt</DependentUpon>
-    </Compile>
+    <Compile Include="DependencyRegisterType.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Inventory.cs">
-      <DependentUpon>RescueStation.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Models\RescueStation.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RescueStation.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\RescueStation.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RescueStation.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\RescueStation.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RescueStation.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Services\AccountService.cs" />
-    <Compile Include="Services\DogLoverService.cs" />
-    <Compile Include="Services\DogService.cs" />
-    <Compile Include="Services\SupportFilter.cs" />
-    <Compile Include="Utils\ConverterUtil.cs" />
-    <Compile Include="Utils\DefaultUtil.cs" />
-    <Compile Include="Utils\MyStatusCode.cs" />
+    <Compile Include="SupportFilter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -284,16 +237,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="log4net.xml" />
-    <Content Include="Models\RescueStation.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>RescueStation.edmx</DependentUpon>
-      <LastGenOutput>RescueStation.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\RescueStation.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>RescueStation.edmx</DependentUpon>
-      <LastGenOutput>RescueStation.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -318,13 +261,6 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EntityDeploy Include="Models\RescueStation.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>RescueStation.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\RescueStation.edmx.diagram">
-      <DependentUpon>RescueStation.edmx</DependentUpon>
-    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -348,6 +284,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Services\" />
+    <Folder Include="Utils\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -366,6 +304,32 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DogStation.Entity\DogStation.Entity.csproj">
+      <Project>{1ae6a45e-2ef5-4558-aecd-3b4808cb8680}</Project>
+      <Name>DogStation.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DogStation.IRepository\DogStation.IRepository.csproj">
+      <Project>{4ddf0ce0-bee4-45c7-9ece-821b8e4e7d17}</Project>
+      <Name>DogStation.IRepository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DogStation.IServices\DogStation.IServices.csproj">
+      <Project>{93ce6db7-e275-4139-87d7-a362c3a9ed60}</Project>
+      <Name>DogStation.IServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DogStation.Repository\DogStation.Repository.csproj">
+      <Project>{54190648-04a1-4920-9845-8f872c0d4258}</Project>
+      <Name>DogStation.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DogStation.Services\DogStation.Services.csproj">
+      <Project>{e3f8f12c-bf83-4a6e-91e7-e09d9a7fa34c}</Project>
+      <Name>DogStation.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DogStation.Utils\DogStation.Utils.csproj">
+      <Project>{de4323bb-d233-42ee-b0e3-ef4f61cd35a0}</Project>
+      <Name>DogStation.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

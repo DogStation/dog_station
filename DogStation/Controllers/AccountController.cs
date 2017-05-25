@@ -1,6 +1,4 @@
-﻿using DogStation.Services;
-using DogStation.Utils;
-using log4net;
+﻿using log4net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,14 +6,18 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
-
+using Microsoft.Practices.Unity;
+using DogStation.IServices;
+using DogStation.Utils;
 
 namespace DogStation.Controllers
 {
     [RoutePrefix("api/account")]
     public class AccountController : ApiController
     {
-        static readonly AccountService accountService = new AccountService();
+        [Dependency]
+        public IAccountService accountService { get; set; }
+
         static readonly ILog logger = LogManager.GetLogger("myLog");
 
         [HttpGet, Route("login")]

@@ -3,6 +3,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using DogStation.Areas.HelpPage.ModelDescriptions;
 using DogStation.Areas.HelpPage.Models;
+using Microsoft.Practices.Unity;
 
 namespace DogStation.Areas.HelpPage.Controllers
 {
@@ -13,6 +14,7 @@ namespace DogStation.Areas.HelpPage.Controllers
     {
         private const string ErrorViewName = "Error";
 
+        [InjectionConstructor]
         public HelpController()
             : this(GlobalConfiguration.Configuration)
         {

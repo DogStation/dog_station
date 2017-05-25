@@ -1,5 +1,5 @@
-﻿using DogStation.Models;
-using DogStation.Services;
+﻿using DogStation.IServices;
+using DogStation.Entity.Models;
 using DogStation.Utils;
 using System;
 using System.Collections.Generic;
@@ -7,13 +7,15 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Microsoft.Practices.Unity;
 
 namespace DogStation.Controllers
 {
     [RoutePrefix("api/dogs")]
     public class DogController : ApiController
     {
-        static readonly DogService dogService = new DogService();
+        [Dependency]
+        public IDogService dogService { get; set; }
 
         [SupportFilter]
         [HttpGet, Route("all")]

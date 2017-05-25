@@ -1,3 +1,4 @@
 /packages
-/DogStation/bin
-/DogStation/obj
+
+**/bin/
+**/obj/

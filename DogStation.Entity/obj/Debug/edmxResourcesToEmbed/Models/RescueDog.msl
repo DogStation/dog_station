@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="dog_stationModelStoreContainer" CdmEntityContainer="RescueDogEntities">
+    <EntitySetMapping Name="Activity">
+      <EntityTypeMapping TypeName="dog_stationModel.Activity">
+        <MappingFragment StoreEntitySet="Activity">
+          <ScalarProperty Name="idActivity" ColumnName="idActivity" />
+          <ScalarProperty Name="admins" ColumnName="admins" />
+          <ScalarProperty Name="lovers" ColumnName="lovers" />
+          <ScalarProperty Name="dogs" ColumnName="dogs" />
+          <ScalarProperty Name="kind" ColumnName="kind" />
+          <ScalarProperty Name="desc" ColumnName="desc" />
+          <ScalarProperty Name="images" ColumnName="images" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Admin">
+      <EntityTypeMapping TypeName="dog_stationModel.Admin">
+        <MappingFragment StoreEntitySet="Admin">
+          <ScalarProperty Name="idAdmin" ColumnName="idAdmin" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="gender" ColumnName="gender" />
+          <ScalarProperty Name="tel" ColumnName="tel" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="figure" ColumnName="figure" />
+          <ScalarProperty Name="motto" ColumnName="motto" />
+          <ScalarProperty Name="birth" ColumnName="birth" />
+          <ScalarProperty Name="post" ColumnName="post" />
+          <ScalarProperty Name="postTime" ColumnName="postTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Comment">
+      <EntityTypeMapping TypeName="dog_stationModel.Comment">
+        <MappingFragment StoreEntitySet="Comment">
+          <ScalarProperty Name="idComment" ColumnName="idComment" />
+          <ScalarProperty Name="commenter" ColumnName="commenter" />
+          <ScalarProperty Name="dog" ColumnName="dog" />
+          <ScalarProperty Name="content" ColumnName="content" />
+          <ScalarProperty Name="commentTime" ColumnName="commentTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Dog">
+      <EntityTypeMapping TypeName="dog_stationModel.Dog">
+        <MappingFragment StoreEntitySet="Dog">
+          <ScalarProperty Name="idDog" ColumnName="idDog" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="gender" ColumnName="gender" />
+          <ScalarProperty Name="kind" ColumnName="kind" />
+          <ScalarProperty Name="figure" ColumnName="figure" />
+          <ScalarProperty Name="sender" ColumnName="sender" />
+          <ScalarProperty Name="sendTime" ColumnName="sendTime" />
+          <ScalarProperty Name="adopter" ColumnName="adopter" />
+          <ScalarProperty Name="adoptTime" ColumnName="adoptTime" />
+          <ScalarProperty Name="loves" ColumnName="loves" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DogLover">
+      <EntityTypeMapping TypeName="dog_stationModel.DogLover">
+        <MappingFragment StoreEntitySet="DogLover">
+          <ScalarProperty Name="idUser" ColumnName="idUser" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="gender" ColumnName="gender" />
+          <ScalarProperty Name="tel" ColumnName="tel" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="figure" ColumnName="figure" />
+          <ScalarProperty Name="loves" ColumnName="loves" />
+          <ScalarProperty Name="adoptDogs" ColumnName="adoptDogs" />
+          <ScalarProperty Name="loveDogs" ColumnName="loveDogs" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DonateItem">
+      <EntityTypeMapping TypeName="dog_stationModel.DonateItem">
+        <MappingFragment StoreEntitySet="DonateItem">
+          <ScalarProperty Name="idDonateItem" ColumnName="idDonateItem" />
+          <ScalarProperty Name="record" ColumnName="record" />
+          <ScalarProperty Name="category" ColumnName="category" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="number" ColumnName="number" />
+          <ScalarProperty Name="unit" ColumnName="unit" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DonateRecord">
+      <EntityTypeMapping TypeName="dog_stationModel.DonateRecord">
+        <MappingFragment StoreEntitySet="DonateRecord">
+          <ScalarProperty Name="idDonateRecord" ColumnName="idDonateRecord" />
+          <ScalarProperty Name="lover" ColumnName="lover" />
+          <ScalarProperty Name="items" ColumnName="items" />
+          <ScalarProperty Name="lovesInc" ColumnName="lovesInc" />
+          <ScalarProperty Name="donateTime" ColumnName="donateTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Follow">
+      <EntityTypeMapping TypeName="dog_stationModel.Follow">
+        <MappingFragment StoreEntitySet="Follow">
+          <ScalarProperty Name="lover_" ColumnName="lover_" />
+          <ScalarProperty Name="dog_" ColumnName="dog_" />
+          <ScalarProperty Name="followTime" ColumnName="followTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Inventory">
+      <EntityTypeMapping TypeName="dog_stationModel.Inventory">
+        <MappingFragment StoreEntitySet="Inventory">
+          <ScalarProperty Name="idInventory" ColumnName="idInventory" />
+          <ScalarProperty Name="category" ColumnName="category" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="desc" ColumnName="desc" />
+          <ScalarProperty Name="quantity" ColumnName="quantity" />
+          <ScalarProperty Name="unit" ColumnName="unit" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
