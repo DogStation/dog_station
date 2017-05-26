@@ -1,4 +1,4 @@
-﻿using DogStation.IServices;
+﻿using DogStation.Services;
 using DogStation.Entity.Models;
 using DogStation.Utils;
 using System;
@@ -15,7 +15,7 @@ namespace DogStation.Controllers
     public class DogLoverController : ApiController
     {
         [Dependency]
-        public IDogLoverService loverService { get; set; }
+        public DogLoverService loverService { get; set; }
 
         [SupportFilter]
         [HttpPost, Route("lover/donate")]

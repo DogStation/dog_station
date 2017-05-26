@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using Microsoft.Practices.Unity;
-using DogStation.IServices;
+using DogStation.Services;
 using DogStation.Utils;
 
 namespace DogStation.Controllers
@@ -16,7 +16,7 @@ namespace DogStation.Controllers
     public class AccountController : ApiController
     {
         [Dependency]
-        public IAccountService accountService { get; set; }
+        public AccountService accountService { get; set; }
 
         static readonly ILog logger = LogManager.GetLogger("myLog");
 

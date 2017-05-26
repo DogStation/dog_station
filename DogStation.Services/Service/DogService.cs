@@ -1,4 +1,4 @@
-﻿using DogStation.IRepository;
+﻿using DogStation.Repository;
 using DogStation.Utils;
 using System;
 using System.Collections.Generic;
@@ -6,20 +6,19 @@ using System.Linq;
 using System.Web;
 using DogStation.Entity.Models;
 using Microsoft.Practices.Unity;
-using DogStation.IServices;
 
 namespace DogStation.Services
 {
-    public class DogService : IDogService
+    public class DogService
     {
         [Dependency]
-        public IDogRepository dogDao { get; set; }
+        public DogRepository dogDao { get; set; }
         [Dependency]
-        public IDogLoverRepository loverDao { get; set; }
+        public DogLoverRepository loverDao { get; set; }
         [Dependency]
-        public IFollowRepository followDao { get; set; }
+        public FollowRepository followDao { get; set; }
         [Dependency]
-        public IActivityRepository activityDao { get; set; }
+        public ActivityRepository activityDao { get; set; }
 
         public List<Dictionary<String, Object>> GetAvailableDogs()
         {
@@ -57,7 +56,7 @@ namespace DogStation.Services
         public long SendDog(Dog dog)
         {
             long idDog = 0;
-            using (var dbTransaction = RescueDog.Transaction())
+            using (var dbTransaction = dogDao.db.Database.BeginTransaction())
             {
                 try
                 {
@@ -87,7 +86,7 @@ namespace DogStation.Services
                 state = MyStatusCode.CannotAfford;
             else
             {
-                using (var dbTransaction = RescueDog.Transaction())
+                using (var dbTransaction = dogDao.db.Database.BeginTransaction())
                 {
                     try
                     {
@@ -116,7 +115,7 @@ namespace DogStation.Services
                 state = MyStatusCode.Limited;
             else
             {
-                using (var dbTransaction = RescueDog.Transaction())
+                using (var dbTransaction = dogDao.db.Database.BeginTransaction())
                 {
                     try
                     {
@@ -149,7 +148,7 @@ namespace DogStation.Services
                 state = MyStatusCode.Invalid;
             else
             {
-                using (var dbTransaction = RescueDog.Transaction())
+                using (var dbTransaction = dogDao.db.Database.BeginTransaction())
                 {
                     try
                     {

@@ -3,11 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using DogStation.IRepository;
 using DogStation.Repository;
-using DogStation.IServices;
 using DogStation.Services;
-
+using DogStation.Entity.Models;
+using DogStation.Controllers;
 
 namespace DogStation
 {
@@ -16,16 +15,22 @@ namespace DogStation
         public static UnityContainer Container()
         {
             var container = new UnityContainer();
-            container.RegisterType<IActivityRepository, ActivityRepository>();
-            container.RegisterType<IDogLoverRepository, DogLoverRepository>();
-            container.RegisterType<IDogRepository, DogRepository>();
-            container.RegisterType<IDonateRepository, DonateRepository>();
-            container.RegisterType<IFollowRepository, FollowRepository>();
-            container.RegisterType<IInventoryRepository, InventoryRepository>();
 
-            container.RegisterType<IAccountService, AccountService>();
-            container.RegisterType<IDogService, DogService>();
-            container.RegisterType<IDogLoverService, DogLoverService>();
+
+            container.RegisterType<ActivityRepository>();
+            container.RegisterType<DogLoverRepository>();
+            container.RegisterType<DogRepository>();
+            container.RegisterType<DonateRepository>();
+            container.RegisterType<FollowRepository>();
+            container.RegisterType<InventoryRepository>();
+
+            container.RegisterType<AccountService>();
+            container.RegisterType<DogService>();
+            container.RegisterType<DogLoverService>();
+
+            container.RegisterType<AccountController>();
+            container.RegisterType<DogController>();
+            container.RegisterType<DogLoverController>();
 
             return container;
         }

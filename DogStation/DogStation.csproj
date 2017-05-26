@@ -310,14 +310,6 @@
       <Project>{1ae6a45e-2ef5-4558-aecd-3b4808cb8680}</Project>
       <Name>DogStation.Entity</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DogStation.IRepository\DogStation.IRepository.csproj">
-      <Project>{4ddf0ce0-bee4-45c7-9ece-821b8e4e7d17}</Project>
-      <Name>DogStation.IRepository</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DogStation.IServices\DogStation.IServices.csproj">
-      <Project>{93ce6db7-e275-4139-87d7-a362c3a9ed60}</Project>
-      <Name>DogStation.IServices</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DogStation.Repository\DogStation.Repository.csproj">
       <Project>{54190648-04a1-4920-9845-8f872c0d4258}</Project>
       <Name>DogStation.Repository</Name>

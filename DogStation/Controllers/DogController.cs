@@ -1,4 +1,4 @@
-﻿using DogStation.IServices;
+﻿using DogStation.Services;
 using DogStation.Entity.Models;
 using DogStation.Utils;
 using System;
@@ -15,7 +15,7 @@ namespace DogStation.Controllers
     public class DogController : ApiController
     {
         [Dependency]
-        public IDogService dogService { get; set; }
+        public DogService dogService { get; set; }
 
         [SupportFilter]
         [HttpGet, Route("all")]

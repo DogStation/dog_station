@@ -3,19 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
-using DogStation.IRepository;
+using DogStation.Repository;
 using DogStation.Entity.Models;
-using DogStation.IServices;
 using log4net;
 using DogStation.Utils;
 using Microsoft.Practices.Unity;
 
 namespace DogStation.Services
 {
-    public class AccountService : IAccountService
+    public class AccountService
     {
         [Dependency]
-        public IDogLoverRepository loverDao { get; set; }
+        public DogLoverRepository loverDao { get; set; }
 
         private static readonly ILog logger = LogManager.GetLogger("myLog");
 

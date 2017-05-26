@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DogStation.IRepository;
 using DogStation.Entity.Models;
 using System.Data.Entity;
 
+
 namespace DogStation.Repository
 {
-    public class DogRepository : IDogRepository
+    public class DogRepository : IRepository<Dog>
     {
-        private RescueDogEntities db = RescueDog.Instance();
+        public readonly RescueDogEntities db = RescueDog.Instance();
+
 
         public Dog Add(Dog t)
         {

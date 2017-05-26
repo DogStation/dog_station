@@ -1,0 +1,6 @@
+2017-05-26 14:46:32,987 DogStation.Controllers.AccountController DEBUG - name:吕金华 pw:123 #28
+2017-05-26 14:46:43,957 DogStation.Controllers.AccountController DEBUG - name:吕金华 pw:123 #28
+2017-05-26 14:46:44,141 DogStation.Services.AccountService DEBUG - Cookie[Token] exists #35
+2017-05-26 14:54:04,893 DogStation.Controllers.AccountController DEBUG - name:吕金华 pw:123 #28
+2017-05-26 14:54:11,545 DogStation.Controllers.AccountController DEBUG - name:吕金华 pw:123 #28
+2017-05-26 14:54:11,751 DogStation.Services.AccountService DEBUG - Cookie[Token] exists #35

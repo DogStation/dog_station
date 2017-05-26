@@ -69,10 +69,6 @@
       <Project>{1ae6a45e-2ef5-4558-aecd-3b4808cb8680}</Project>
       <Name>DogStation.Entity</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DogStation.IRepository\DogStation.IRepository.csproj">
-      <Project>{4ddf0ce0-bee4-45c7-9ece-821b8e4e7d17}</Project>
-      <Name>DogStation.IRepository</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DogStation.Utils\DogStation.Utils.csproj">
       <Project>{de4323bb-d233-42ee-b0e3-ef4f61cd35a0}</Project>
       <Name>DogStation.Utils</Name>

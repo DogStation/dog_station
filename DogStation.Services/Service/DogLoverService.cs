@@ -1,4 +1,4 @@
-﻿using DogStation.IRepository;
+﻿using DogStation.Repository;
 using DogStation.Entity.Models;
 using DogStation.Utils;
 using System;
@@ -6,18 +6,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Microsoft.Practices.Unity;
-using DogStation.IServices;
 
 namespace DogStation.Services
 {
-    public class DogLoverService : IDogLoverService
+    public class DogLoverService
     {
         [Dependency]
-        public IDonateRepository donateDao { get; set; }
+        public DonateRepository donateDao { get; set; }
         [Dependency]
-        public IDogLoverRepository loverDao { get; set; }
+        public DogLoverRepository loverDao { get; set; }
         [Dependency]
-        public IInventoryRepository inventoryDao { get; set; }
+        public InventoryRepository inventoryDao { get; set; }
 
         public List<Dictionary<string, object>> SeeDonations(long userId)
         {
@@ -41,7 +40,7 @@ namespace DogStation.Services
                     donateTime = DateTime.Now
                 };
                 
-                using(var dbTransaction = RescueDog.Transaction())
+                using(var dbTransaction = loverDao.db.Database.BeginTransaction())
                 {
                     try
                     {
