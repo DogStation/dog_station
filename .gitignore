@@ -1,4 +1,6 @@
 /packages
-
+/node_modules
+/DogStation/App_Data
+/DogStation/Logs
 **/bin/
 **/obj/

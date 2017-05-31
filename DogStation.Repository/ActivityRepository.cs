@@ -15,7 +15,9 @@ namespace DogStation.Repository
 
         public Activity Add(Activity t)
         {
-            throw new NotImplementedException();
+            db.Entry(t).State = EntityState.Added;
+            db.SaveChangesAsync();
+            return t;
         }
 
         public Activity Delete(long id)
@@ -30,7 +32,10 @@ namespace DogStation.Repository
 
         public List<Activity> GetActivities(long idDog)
         {
-            List<Activity> list = db.Activity.ToList();
+            string id = " " + idDog;
+            List<Activity> list = db.Activity.
+                Where(a => a.dogs.Contains(id))
+                .ToList();
 
             return list;
         }

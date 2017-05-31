@@ -35,9 +35,26 @@ namespace DogStation.Repository
             return db.DogLover.ToList();
         }
 
+        public List<DogLover> GetAll(long[] ids)
+        {
+            return db.DogLover
+                .Where(l => ids.Contains(l.idUser))
+                .ToList();
+        }
+
         public bool Update(DogLover t)
         {
-            db.Entry(t).State = EntityState.Modified;
+            DogLover lover = Get(t.idUser);
+            lover.name = t.name;
+            lover.tel = t.tel;
+            lover.email = t.email;
+            lover.gender = t.gender;
+            lover.figure = t.figure;
+            db.Entry(lover).Property(x => x.name).IsModified = true;
+            db.Entry(lover).Property(x => x.tel).IsModified = true;
+            db.Entry(lover).Property(x => x.email).IsModified = true;
+            db.Entry(lover).Property(x => x.gender).IsModified = true;
+            db.Entry(lover).Property(x => x.figure).IsModified = true;
             db.SaveChangesAsync();
             return true;
         }
@@ -56,7 +73,7 @@ namespace DogStation.Repository
 
         private DogLover GetUserByName(string username)
         {
-            DogLover lover = db.DogLover.Where(d => d.name == username).SingleOrDefault();
+            DogLover lover = db.DogLover.Where(d => d.name == username&&d.idUser > 0).SingleOrDefault();
             return lover;
         }
 

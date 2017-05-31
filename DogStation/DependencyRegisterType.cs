@@ -16,7 +16,6 @@ namespace DogStation
         {
             var container = new UnityContainer();
 
-
             container.RegisterType<ActivityRepository>();
             container.RegisterType<DogLoverRepository>();
             container.RegisterType<DogRepository>();
@@ -27,10 +26,10 @@ namespace DogStation
             container.RegisterType<AccountService>();
             container.RegisterType<DogService>();
             container.RegisterType<DogLoverService>();
-
-            container.RegisterType<AccountController>();
-            container.RegisterType<DogController>();
-            container.RegisterType<DogLoverController>();
+            container.RegisterType<QiniuService>();
+            //container.RegisterType<AccountController>();
+            //container.RegisterType<DogController>();
+            //container.RegisterType<DogLoverController>();
 
             return container;
         }

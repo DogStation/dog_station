@@ -16,13 +16,15 @@ namespace DogStation.Services
         [Dependency]
         public DogLoverRepository loverDao { get; set; }
         [Dependency]
+        public AdminRepository adminDao { get; set; }
+        [Dependency]
         public FollowRepository followDao { get; set; }
         [Dependency]
         public ActivityRepository activityDao { get; set; }
 
-        public List<Dictionary<String, Object>> GetAvailableDogs()
+        public List<Dictionary<String, Object>> GetAvailableDogs(int p)
         {
-            return ConverterUtil.ConvertDogs(dogDao.GetFreeDogs(), ConverterUtil.ConvertInfo.SenderOnly);
+            return ConverterUtil.ConvertDogs(dogDao.GetFreeDogs(p), ConverterUtil.ConvertInfo.SenderOnly);
         }
 
         public Dictionary<string, object> SeeDogBasic(long idDog)
@@ -32,7 +34,22 @@ namespace DogStation.Services
 
         public List<Dictionary<string, object>> SeeDogActivities(long idDog)
         {
-            return ConverterUtil.ConvertActivities(activityDao.GetActivities(idDog));
+            List<Activity> activities = activityDao.GetActivities(idDog);
+            List<Dictionary<string, object>> result = ConverterUtil.ConvertActivities(activities);
+
+            for(int i = 0; i< activities.Count(); ++i)
+            {
+                Activity a = activities.ElementAt(i);
+                long[] idDogs = ConverterUtil.ConvertIds(a.dogs);
+                long[] idLovers = ConverterUtil.ConvertIds(a.lovers);
+                long[] idAdmins = ConverterUtil.ConvertIds(a.admins);
+
+                result[i].Add("dogs", ConverterUtil.ConvertBasicDogs(dogDao.GetAll(idDogs)));
+                result[i].Add("lovers", ConverterUtil.ConvertBasicLovers(loverDao.GetAll(idLovers)));
+                result[i].Add("admins", ConverterUtil.ConvertBasicAdmins(adminDao.GetAll(idAdmins)));
+            }
+
+            return result;
         }
 
         public List<Dictionary<String, Object>> GetSentDogs(long userId)

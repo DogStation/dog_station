@@ -68,6 +68,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActivityRepository.cs" />
+    <Compile Include="AdminRepository.cs" />
+    <Compile Include="CommentRepository.cs" />
     <Compile Include="DogLoverRepository.cs" />
     <Compile Include="DogRepository.cs" />
     <Compile Include="DonateRepository.cs" />
@@ -85,6 +87,10 @@
     <ProjectReference Include="..\DogStation.Entity\DogStation.Entity.csproj">
       <Project>{1ae6a45e-2ef5-4558-aecd-3b4808cb8680}</Project>
       <Name>DogStation.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DogStation.Utils\DogStation.Utils.csproj">
+      <Project>{de4323bb-d233-42ee-b0e3-ef4f61cd35a0}</Project>
+      <Name>DogStation.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

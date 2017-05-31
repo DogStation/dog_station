@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DogStation.Entity.Models;
 using System.Data.Entity;
-
+using DogStation.Utils;
 
 namespace DogStation.Repository
 {
@@ -37,11 +37,28 @@ namespace DogStation.Repository
             return dogs;
         }
 
-        public List<Dog> GetFreeDogs()
+        public List<Dog> GetAll(long[] ids)
+        {
+            return db.Dog
+                .Where(d => ids.Contains(d.idDog))
+                .ToList();
+        }
+
+        public void IncLoves(long idDog, int inc)
+        {
+            Dog dog = Get(idDog);
+            dog.loves += inc;
+            db.Entry(dog).Property(d => d.loves).IsModified = true;
+            db.SaveChangesAsync();
+        }
+
+        public List<Dog> GetFreeDogs(int page)
         {
             return db.Dog
                 .Where(d => d.adopter == 0)
                 .OrderByDescending(d => d.sendTime)
+                .Skip(DefaultUtil.DefaultDogPageSize * (page - 1))
+                .Take(DefaultUtil.DefaultDogPageSize)
                 .ToList();
         }
 
