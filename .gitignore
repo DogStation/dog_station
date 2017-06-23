@@ -2,5 +2,7 @@
 /node_modules
 /DogStation/App_Data
 /DogStation/Logs
+**/Debug/
+**/Release/
 **/bin/
 **/obj/

@@ -8,7 +8,4 @@
 
 ### 使用方式
 
-1. git clone https://github.com/DogStation/dog_station.git
-2. 用vs2017打开根目录下的.sln文件，等待vs自动导入Nuget依赖包
-3. 将LitJson.dll和log4net.dll添加到/DogStation/bin中
-4. 运行
+vs 2015及以上版本打开

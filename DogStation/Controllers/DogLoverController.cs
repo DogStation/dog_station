@@ -18,6 +18,18 @@ namespace DogStation.Controllers
         [Dependency]
         public DogLoverService loverService { get; set; }
 
+        [SupportFilter]
+        [HttpGet, Route("lover/get")]
+        public HttpResponseMessage SeeLoverBasicInfo()
+        {
+            HttpResponseMessage message = new HttpResponseMessage();
+            long userId = SupportFilter.GetUserIdFromCookie();
+            Dictionary<string, object> lover = loverService.SeeLoverBasic(userId);
+            string content = LitJson.JsonMapper.ToJson(lover);
+            message.Content = new StringContent(content, System.Text.Encoding.UTF8, "application/json");
+            message.StatusCode = HttpStatusCode.OK;
+            return message;
+        }
 
         [SupportFilter]
         [HttpPost, Route("lover/donate")]

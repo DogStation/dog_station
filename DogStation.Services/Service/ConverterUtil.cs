@@ -15,19 +15,19 @@ namespace DogStation.Utils
             SenderAdopter
         }
 
-        public static List<Dictionary<String, Object>> ConvertDogs(List<Dog> dogs, ConvertInfo info)
+        public static List<Dictionary<String, Object>> ConvertDogs(long userId, List<Dog> dogs, ConvertInfo info)
         {
             List<Dictionary<String, Object>> result = new List<Dictionary<string, object>>();
             Dictionary<String, Object> dict = null;
             foreach (Dog dog in dogs)
             {
-                dict = ConvertDog(dog, info);
+                dict = ConvertDog(userId, dog, info);
                 result.Add(dict);
             }
             return result;
         }
 
-        public static Dictionary<String, Object> ConvertDog(Dog dog, ConvertInfo info)
+        public static Dictionary<String, Object> ConvertDog(long userId, Dog dog, ConvertInfo info)
         {
             Dictionary<String, Object> dict = new Dictionary<string, object>();
             if (dog == null)
@@ -39,6 +39,19 @@ namespace DogStation.Utils
             dict.Add("figure", dog.figure);
             dict.Add("sender", dog.sender);
             dict.Add("sendTime", dog.sendTime.ToShortDateString());
+            if (userId != 0)
+            {
+                bool loved = false;
+                foreach (Follow f in dog.Follow)
+                {
+                    if (f.lover_ == userId)
+                    {
+                        loved = true;
+                        break;
+                    }
+                }
+                dict.Add("loved", loved);
+            }
             if (info == ConvertInfo.SenderOnly || info == ConvertInfo.SenderAdopter)
             {
                 dict.Add("senderName", dog.DogLover1.name);
@@ -174,7 +187,7 @@ namespace DogStation.Utils
         {
             List<Dictionary<string, object>> result = new List<Dictionary<string, object>>();
             Dictionary<string, object> dict = null;
-            foreach(Admin a in admins)
+            foreach (Admin a in admins)
             {
                 dict = new Dictionary<string, object>();
                 dict.Add("id", a.idAdmin);
@@ -185,6 +198,21 @@ namespace DogStation.Utils
             return result;
         }
 
+        public static Dictionary<string, object> ConvertDogLover(DogLover lover)
+        {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            if (lover == null) return dict;
+            dict.Add("idUser", lover.idUser);
+            dict.Add("name", lover.name);
+            dict.Add("gender", lover.gender);
+            dict.Add("tel", lover.tel);
+            dict.Add("email", lover.email);
+            dict.Add("figure", lover.figure);
+            dict.Add("loves", lover.loves);
+            dict.Add("loveDogs", lover.loveDogs);
+            dict.Add("adoptDogs", lover.adoptDogs);
+            return dict;
+        }
 
         public static long[] ConvertIds(string ids)
         {

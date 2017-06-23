@@ -1,0 +1,7 @@
+﻿  Stdafx.cpp
+  AssemblyInfo.cpp
+  DogStationCLIB.cpp
+DogStationCLIB.cpp(31): warning C4244: 'return': conversion from '__int64' to 'long', possible loss of data
+  Generating Code...
+  .NETFramework,Version=v4.5.2.AssemblyAttributes.cpp
+  DogStationCLIB.vcxproj -> D:\Programs\Visual Studio 2017\Projects\C#\dog_station\Release\DogStationCLIB.dll

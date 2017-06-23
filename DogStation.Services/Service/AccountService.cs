@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.Security;
 using DogStation.Repository;
 using DogStation.Entity.Models;
 using log4net;
 using DogStation.Utils;
+using DogStationCLIB;
 using Microsoft.Practices.Unity;
+using DogStationComLib;
+using System.Net.Http.Headers;
 
 namespace DogStation.Services
 {
@@ -20,26 +22,26 @@ namespace DogStation.Services
 
         public string GenerateToken(string username, string password, long userId)
         {
-            FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(0, username, DateTime.Now,
-                DateTime.Now.AddDays(3), true, string.Format("{0}&{1}&{2}", userId, username, password),
-                FormsAuthentication.FormsCookiePath);
-            var token = FormsAuthentication.Encrypt(ticket);
+            ComClassClass com = new ComClassClass();
+            int result = 0;
+            com.add(1, 2, ref result);
+
+            var token = CppTokenHolder.GenToken((int)userId, username, password);
             HttpContext.Current.Session[username] = token;
             return token;
         }
 
         public bool GenerateCookie(string token)
         {
-            if (HttpContext.Current.Request.Cookies["Token"] != null)
-            {
-                logger.Debug("Cookie[Token] exists");
-                HttpContext.Current.Request.Cookies.Remove("Token");
-                //return false;
-            }
-            HttpCookie cookie = new HttpCookie("Token");
+            //if (HttpContext.Current.Request.Cookies["Token"] != null)
+            //{
+            //    logger.Debug("Cookie[Token] exists");
+            //    HttpContext.Current.Request.Cookies.Remove("Token");
+            //    //return false;
+            //}
+            var cookie = new HttpCookie("Token", token);
             cookie.Domain = HttpContext.Current.Request.Url.Host;
             cookie.Path = "/";
-            cookie.Value = token;
             HttpContext.Current.Response.AppendCookie(cookie);
             return true;
         }
@@ -60,7 +62,7 @@ namespace DogStation.Services
         public MyStatusCode ValidateAccount(string username, string password, ref long userId)
         {
             MyStatusCode state = MyStatusCode.Invalid;
-            if (!CheckAccountInfo(username, password))
+            if (!AccountUtil.CheckAccountInfo(username, password))
                 return state;
             string pw = loverDao.GetPw(username);
 
@@ -86,7 +88,7 @@ namespace DogStation.Services
         public MyStatusCode RegisterAccount(string username, string password, string gender)
         {
             MyStatusCode state = MyStatusCode.Invalid;
-            if (!CheckAccountInfo(username, password) ||
+            if (!AccountUtil.CheckAccountInfo(username, password) ||
                 !(gender.Equals("M") || gender.Equals("F")))
                 return state;
             if (loverDao.GetPw(username) != null)
@@ -112,10 +114,5 @@ namespace DogStation.Services
             return state;
         }
 
-        private bool CheckAccountInfo(string name, string pw)
-        {
-            return !(string.IsNullOrEmpty(name) || string.IsNullOrEmpty(pw)
-                || name.Count() > 20 || pw.Count() > 30);
-        }
     }
 }

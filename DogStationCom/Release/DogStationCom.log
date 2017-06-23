@@ -1,0 +1,40 @@
+﻿  Processing .\DogStationCom.idl
+  DogStationCom.idl
+  Processing C:\Program Files (x86)\Windows Kits\10\Include\10.0.14393.0\um\oaidl.idl
+  oaidl.idl
+  Processing C:\Program Files (x86)\Windows Kits\10\Include\10.0.14393.0\um\objidl.idl
+  objidl.idl
+  Processing C:\Program Files (x86)\Windows Kits\10\Include\10.0.14393.0\um\unknwn.idl
+  unknwn.idl
+  Processing C:\Program Files (x86)\Windows Kits\10\Include\10.0.14393.0\shared\wtypes.idl
+  wtypes.idl
+  Processing C:\Program Files (x86)\Windows Kits\10\Include\10.0.14393.0\shared\wtypesbase.idl
+  wtypesbase.idl
+  Processing C:\Program Files (x86)\Windows Kits\10\Include\10.0.14393.0\shared\basetsd.h
+  basetsd.h
+  Processing C:\Program Files (x86)\Windows Kits\10\Include\10.0.14393.0\shared\guiddef.h
+  guiddef.h
+  Processing C:\Program Files (x86)\Windows Kits\10\Include\10.0.14393.0\um\ocidl.idl
+  ocidl.idl
+  Processing C:\Program Files (x86)\Windows Kits\10\Include\10.0.14393.0\um\oleidl.idl
+  oleidl.idl
+  Processing C:\Program Files (x86)\Windows Kits\10\Include\10.0.14393.0\um\servprov.idl
+  servprov.idl
+  Processing C:\Program Files (x86)\Windows Kits\10\Include\10.0.14393.0\um\urlmon.idl
+  urlmon.idl
+  Processing C:\Program Files (x86)\Windows Kits\10\Include\10.0.14393.0\um\msxml.idl
+  msxml.idl
+  Processing C:\Program Files (x86)\Windows Kits\10\Include\10.0.14393.0\um\oaidl.acf
+  oaidl.acf
+  Processing C:\Program Files (x86)\Windows Kits\10\Include\10.0.14393.0\um\ocidl.acf
+  ocidl.acf
+  stdafx.cpp
+  ComClass.cpp
+  DogStationCom.cpp
+  Generating Code...
+  dllmain.cpp
+  DogStationCom_i.c
+     Creating library D:\Programs\Visual Studio 2017\Projects\C#\dog_station\Release\DogStationCom.lib and object D:\Programs\Visual Studio 2017\Projects\C#\dog_station\Release\DogStationCom.exp
+  DogStationCom.vcxproj -> D:\Programs\Visual Studio 2017\Projects\C#\dog_station\Release\DogStationCom.dll
+D:\Programs\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppCommon.targets(1766,5): warning MSB3075: The command "regsvr32 /s "D:\Programs\Visual Studio 2017\Projects\C#\dog_station\Release\DogStationCom.dll"" exited with code 5. Please verify that you have sufficient rights to run this command.
+D:\Programs\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppCommon.targets(1778,5): error MSB8011: Failed to register output. Please try enabling Per-user Redirection or register the component from a command prompt with elevated permissions.

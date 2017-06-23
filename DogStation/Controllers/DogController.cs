@@ -21,11 +21,12 @@ namespace DogStation.Controllers
         [HttpGet, Route("all")]
         public HttpResponseMessage GetAllAvailableDogs(int p)
         {
+            long userId = SupportFilter.GetUserIdFromCookie();
             HttpResponseMessage message = new HttpResponseMessage();
             message.StatusCode = HttpStatusCode.Forbidden;
             if (p > 0)
             {
-                List<Dictionary<String, Object>> dogs = dogService.GetAvailableDogs(p);
+                List<Dictionary<String, Object>> dogs = dogService.GetAvailableDogs(userId, p);
                 message.StatusCode = HttpStatusCode.OK;
                 string content = LitJson.JsonMapper.ToJson(dogs);
                 message.Content = new StringContent(content, System.Text.Encoding.UTF8, "application/json");
@@ -137,8 +138,9 @@ namespace DogStation.Controllers
         [HttpGet, Route("dog/get")]
         public HttpResponseMessage SeeDogBasicInfo(long idDog)
         {
+            long userId = SupportFilter.GetUserIdFromCookie();
             HttpResponseMessage message = new HttpResponseMessage();
-            Dictionary<string, object> dog = dogService.SeeDogBasic(idDog);
+            Dictionary<string, object> dog = dogService.SeeDogBasic(userId, idDog);
             string content = LitJson.JsonMapper.ToJson(dog);
             message.Content = new StringContent(content, System.Text.Encoding.UTF8, "application/json");
             message.StatusCode = HttpStatusCode.OK;

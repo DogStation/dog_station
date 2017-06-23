@@ -22,14 +22,14 @@ namespace DogStation.Services
         [Dependency]
         public ActivityRepository activityDao { get; set; }
 
-        public List<Dictionary<String, Object>> GetAvailableDogs(int p)
+        public List<Dictionary<String, Object>> GetAvailableDogs(long userId, int p)
         {
-            return ConverterUtil.ConvertDogs(dogDao.GetFreeDogs(p), ConverterUtil.ConvertInfo.SenderOnly);
+            return ConverterUtil.ConvertDogs(userId, dogDao.GetFreeDogs(p), ConverterUtil.ConvertInfo.SenderOnly);
         }
 
-        public Dictionary<string, object> SeeDogBasic(long idDog)
+        public Dictionary<string, object> SeeDogBasic(long userId, long idDog)
         {
-            return ConverterUtil.ConvertDog(dogDao.Get(idDog), ConverterUtil.ConvertInfo.SenderAdopter);
+            return ConverterUtil.ConvertDog(userId, dogDao.Get(idDog), ConverterUtil.ConvertInfo.SenderAdopter);
         }
 
         public List<Dictionary<string, object>> SeeDogActivities(long idDog)
@@ -55,19 +55,19 @@ namespace DogStation.Services
         public List<Dictionary<String, Object>> GetSentDogs(long userId)
         {
             if (userId == 0) return null;
-            return ConverterUtil.ConvertDogs(dogDao.GetSentDogs(userId), ConverterUtil.ConvertInfo.SenderOnly);
+            return ConverterUtil.ConvertDogs(userId, dogDao.GetSentDogs(userId), ConverterUtil.ConvertInfo.SenderOnly);
         }
 
         public List<Dictionary<String, Object>> GetAdoptedDogs(long userId)
         {
             if (userId == 0) return null;
-            return ConverterUtil.ConvertDogs(dogDao.GetAdoptedDogs(userId), ConverterUtil.ConvertInfo.SenderAdopter);
+            return ConverterUtil.ConvertDogs(0, dogDao.GetAdoptedDogs(userId), ConverterUtil.ConvertInfo.SenderAdopter);
         }
 
         public List<Dictionary<String, Object>> GetFollowDogs(long userId)
         {
             if (userId == 0) return null;
-            return ConverterUtil.ConvertDogs(followDao.GetFollowDogs(userId), ConverterUtil.ConvertInfo.SenderAdopter);
+            return ConverterUtil.ConvertDogs(0, followDao.GetFollowDogs(userId), ConverterUtil.ConvertInfo.SenderAdopter);
         }
 
         public long SendDog(Dog dog)
@@ -169,9 +169,16 @@ namespace DogStation.Services
                 {
                     try
                     {
-                        followDao.Delete(idDog, idLover);
-                        loverDao.UpdateFollow(lover, -1);
-                        dbTransaction.Commit();
+                        if(followDao.Delete(idDog, idLover) != null)
+                        {
+                            loverDao.UpdateFollow(lover, -1);
+                            dbTransaction.Commit();
+                        }
+                        else
+                        {
+                            state = MyStatusCode.Invalid;
+                        }
+                        
                     }
                     catch (Exception)
                     {

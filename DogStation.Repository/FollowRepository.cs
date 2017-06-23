@@ -25,6 +25,7 @@ namespace DogStation.Repository
         {
             //删除follow关系
             Follow f = Get(idDog, idLover);
+            if (f == null) return null;
             db.Entry(f).State = EntityState.Deleted;
             db.SaveChangesAsync();
             return f;
@@ -32,8 +33,10 @@ namespace DogStation.Repository
 
         public Follow Get(long idDog, long idLover)
         {
-            return db.Follow.Where(f => f.lover_ == idLover 
-            && f.dog_ == idDog).SingleOrDefault();
+            List<Follow> follows = db.Follow.Where(f => f.lover_ == idLover
+           && f.dog_ == idDog).ToList();
+            return follows.Count() == 0 ? null : follows[0];
+
         }
 
         public List<Follow> GetAll()

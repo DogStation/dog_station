@@ -1,0 +1,36 @@
+// DogStationCom.idl : IDL source for DogStationCom
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (DogStationCom.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(A0CB4ECC-0398-403D-A3A1-A150F652386E),
+	dual,
+	nonextensible,
+	pointer_default(unique)
+]
+interface IComClass : IDispatch{
+	[id(1)] HRESULT doSth();
+	[id(2)] HRESULT add(LONG p1, LONG p2, LONG* result);
+};
+[
+	uuid(679241CD-B742-4964-A450-0D9C7607F904),
+	version(1.0),
+]
+library DogStationComLib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(9E523678-114C-4066-BD78-95C431AA6A07)		
+	]
+	coclass ComClass
+	{
+		[default] interface IComClass;
+	};
+};
+

@@ -20,8 +20,6 @@ namespace DogStation.Services
         public InventoryRepository inventoryDao { get; set; }
         [Dependency]
         public CommentRepository commentDao { get; set; }
-        [Dependency]
-        public QiniuService qiniuService { get; set; }
 
         public List<Dictionary<string, object>> SeeDonations(long userId)
         {
@@ -29,9 +27,15 @@ namespace DogStation.Services
             return ConverterUtil.ConvertDonations(donateDao.GetDonations(userId));
         }
 
+        public Dictionary<string, object> SeeLoverBasic(long userId)
+        {
+            if (userId == 0) return null;
+            return ConverterUtil.ConvertDogLover(loverDao.Get(userId));
+        }
+
         public bool Update(DogLover lover)
         {
-            if (loverDao.GetId(lover.name) == 0)
+            if (loverDao.GetId(lover.name) != 0)
                 return false;
             return loverDao.Update(lover);
         }
@@ -41,6 +45,7 @@ namespace DogStation.Services
             string filename = provider.FileData[0].Headers.ContentDisposition.FileName;
             filename = HttpUtility.HtmlDecode(filename.Trim(new char[] { '\\', '"' }));
             string filepath = provider.FileData[0].LocalFileName;
+            QiniuService qiniuService = new QiniuService();
             string figure = qiniuService.UploadFile(filepath, filename);
             DogLover lover = new DogLover()
             {

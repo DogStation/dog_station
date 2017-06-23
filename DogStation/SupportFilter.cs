@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Security;
+using DogStationCLIB;
 
 namespace DogStation
 {
@@ -31,13 +32,10 @@ namespace DogStation
 
         private bool ValidateTicket(string encrypted)
         {
-            var ticket = FormsAuthentication.Decrypt(encrypted).UserData;
-            var index = ticket.Split('&');
-            string username = index[1];
-            string password = index[2];
-
-            var str = HttpContext.Current.Session[username];
-            return str == null ? false : encrypted.Equals(str.ToString());
+            var username = CppTokenHolder.ExtractName(encrypted);
+            //var str = HttpContext.Current.Session[username];
+            //return str == null ? false : encrypted.Equals(str.ToString());
+            return username != null;
         }
 
         public static long GetUserIdFromCookie()
@@ -47,9 +45,7 @@ namespace DogStation
             {
                 HttpCookieCollection cookies = HttpContext.Current.Request.Cookies;
                 HttpCookie cookie = cookies.Get("Token");
-                var ticket = FormsAuthentication.Decrypt(cookie.Value).UserData;
-                string[] info = ticket.Split('&');
-                userId = Convert.ToInt64(info[0]);
+                userId = CppTokenHolder.ExtractId(cookie.Value);
             }
             catch (NullReferenceException)
             {
@@ -69,9 +65,7 @@ namespace DogStation
             {
                 HttpCookieCollection cookies = HttpContext.Current.Request.Cookies;
                 HttpCookie cookie = cookies.Get("Token");
-                var ticket = FormsAuthentication.Decrypt(cookie.Value).UserData;
-                string[] info = ticket.Split('&');
-                username = info[1];
+                username = CppTokenHolder.ExtractName(cookie.Value);
             }
             catch (NullReferenceException)
             {

@@ -26,10 +26,6 @@ namespace DogStation
             container.RegisterType<AccountService>();
             container.RegisterType<DogService>();
             container.RegisterType<DogLoverService>();
-            container.RegisterType<QiniuService>();
-            //container.RegisterType<AccountController>();
-            //container.RegisterType<DogController>();
-            //container.RegisterType<DogLoverController>();
 
             return container;
         }

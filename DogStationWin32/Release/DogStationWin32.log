@@ -1,0 +1,10 @@
+﻿  stdafx.cpp
+  dllmain.cpp
+  DogStationWin32.cpp
+DogStationWin32.cpp(15): warning C4018: '<': signed/unsigned mismatch
+DogStationWin32.cpp(26): warning C4018: '<': signed/unsigned mismatch
+     Creating library D:\Programs\Visual Studio 2017\Projects\C#\dog_station\Release\DogStationWin32.lib and object D:\Programs\Visual Studio 2017\Projects\C#\dog_station\Release\DogStationWin32.exp
+  Generating code
+  All 89 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  DogStationWin32.vcxproj -> D:\Programs\Visual Studio 2017\Projects\C#\dog_station\Release\DogStationWin32.dll
